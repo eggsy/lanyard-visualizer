@@ -8,7 +8,7 @@ import WindiCSS from "vite-plugin-windicss";
 export default defineConfig({
   root: "./src",
   build: {
-    outDir: "dist",
+    outDir: resolve("./dist"),
   },
   plugins: [
     Vue(),
