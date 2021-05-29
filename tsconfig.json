@@ -13,8 +13,9 @@
       "dom"
     ],
     "types": [
-      "@types/node"
-    ]
+      "@types/node",
+      "vue-router"
+    ],
   },
   "include": [
     "src/**/*.ts",
