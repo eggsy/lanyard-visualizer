@@ -1,6 +1,6 @@
 <template>
-  <div class="grid text-center md:(grid-cols-2 text-left) items-center gap-12">
-    <div class="flex flex-col space-y-4">
+  <div class="grid md:grid-cols-2 items-center gap-12">
+    <div class="flex text-center md:text-left flex-col space-y-4">
       <div>
         <h1 class="text-2xl md:text-4xl font-bold text-shadow-md text-white">
           Lanyard Visualizer
@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onStartTyping } from "@vueuse/core";
+import { onStartTyping, useTitle } from "@vueuse/core";
 import { ref } from "vue";
 
 // Types
@@ -62,6 +62,8 @@ const userId = ref("");
 const input: Ref<HTMLInputElement | null> = ref(null);
 
 // Hooks
+useTitle("Lanyard Visualizer")
+
 onStartTyping(() => {
   input?.value?.focus();
 });
