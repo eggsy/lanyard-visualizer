@@ -12,6 +12,8 @@ A service to see your Discord status online easy and for free with the help of t
   - It will display what you're listening, it'll show a progress bar just like the one on your Discord profile!
 - Every RPCs work!
   - If there's something visible on your status (only RPCs), it's visible here too!
+- Customization, use it as iframe, remove footer or title bar!
+  - You can use simple queries like `?mode=iframe&title=false&footer=false` to customize the look of it! This way, you can iframe it to your website and remove the parts that you don't need!
 - Everything is real-time!
   - We use Lanyard's WebSocket so everything is updated in real-time!
 
