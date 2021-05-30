@@ -1,7 +1,11 @@
 <template>
   <div
-    class="bg-gradient-to-tl flex items-center justify-center min-h-screen text-white px-4 md:px-0"
-    :class="background"
+    class="bg-gradient-to-tl min-h-screen text-white px-4 md:px-0"
+    :class="{
+      [background]: true,
+      'flex items-center justify-center':
+        getOptions.name !== 'User' || getOptions.mode !== 'iframe'
+    }"
   >
     <router-view v-slot="{ Component }">
       <transition name="fade" mode="out-in">
@@ -10,20 +14,33 @@
     </router-view>
   </div>
 
-  <div
-    class="absolute bottom-4 left-0 right-0 text-center text-sm text-white opacity-90"
+  <footer
+    v-if="getOptions.mode !== 'iframe'"
+    class="text-center bg-gray-900 text-sm text-white space-y-4 py-4"
   >
-    Made by
-    <a href="https://eggsy.xyz" rel="noreferrer" class="underline">EGGSY</a>
-    with 💖 and the power of
-    <a href="https://vuejs.org" rel="noreferrer" class="underline">Vue 3</a>!
-    <a
-      href="https://github.com/eggsy/lanyard-visualizer"
-      rel="noreferrer"
-      class="block underline"
-      >Source available on GitHub!</a
-    >
-  </div>
+    <div>
+      <p>
+        Made by
+        <a href="https://eggsy.xyz" rel="noreferrer" class="underline">EGGSY</a>
+        with 💖 and the power of
+        <a href="https://vuejs.org" rel="noreferrer" class="underline">Vue 3</a
+        >!
+      </p>
+
+      <p>
+        <a
+          href="https://github.com/eggsy/lanyard-visualizer"
+          rel="noreferrer"
+          class="block underline"
+          >Source available on GitHub!</a
+        >
+      </p>
+    </div>
+
+    <p v-if="getOptions.name !== 'Home'">
+      <router-link to="/" class="btn">Go back home</router-link>
+    </p>
+  </footer>
 </template>
 
 <style>
@@ -41,6 +58,19 @@
 </style>
 
 <script lang="ts" setup>
+import { computed } from "vue"
+import { useRoute } from "vue-router"
+
+const route = useRoute()
+const getOptions = computed(() => {
+  const {
+    name,
+    query: { mode }
+  } = route
+
+  return { name, mode }
+})
+
 // Available gradient backgrounds
 const backgrounds = [
   "from-blue-400 via-blue-500 to-blue-600",
