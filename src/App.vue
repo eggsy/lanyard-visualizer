@@ -17,6 +17,12 @@
     <a href="https://eggsy.xyz" rel="noreferrer" class="underline">EGGSY</a>
     with 💖 and the power of
     <a href="https://vuejs.org" rel="noreferrer" class="underline">Vue 3</a>!
+    <a
+      href="https://github.com/eggsy/lanyard-visualizer"
+      rel="noreferrer"
+      class="block underline"
+      >Source available on GitHub!</a
+    >
   </div>
 </template>
 
