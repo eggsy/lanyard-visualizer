@@ -2,7 +2,7 @@
   <transition name="fade" mode="out-in">
     <div
       v-if="user.error === true"
-      class="md:w-2/4 space-y-4 text-center md:text-left"
+      class="md:w-2/4 mx-auto space-y-4 text-center md:text-left"
     >
       <h1 class="font-bold text-2xl text-white text-shadow-md">
         Couldn't establish a WS connection to Lanyard API for this user
@@ -37,7 +37,7 @@
 
     <div
       v-else
-      class="w-full flex flex-col space-y-4"
+      class="w-full mx-auto flex flex-col space-y-4"
       :class="mode !== 'iframe' && 'md:w-5/12 2xl:w-3/12'"
     >
       <div v-if="title === true" class="flex items-center justify-between">
