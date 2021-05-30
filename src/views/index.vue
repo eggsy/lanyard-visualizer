@@ -50,8 +50,8 @@
     <div>
       <Card
         name="Lanyard Visualizer"
-        details="Made by EGGSY"
-        state="Vue 3 + Vite ⚡"
+        details="by EGGSY"
+        state="on GitHub, open-source"
       />
     </div>
   </div>
