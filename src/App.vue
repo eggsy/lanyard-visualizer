@@ -3,11 +3,13 @@
     class="bg-gradient-to-tl min-h-screen text-white px-4 flex items-center justify-center"
     :class="background"
   >
-    <router-view v-slot="{ Component }">
-      <transition name="fade" mode="out-in">
-        <component :is="Component" />
-      </transition>
-    </router-view>
+    <div class="container mx-auto">
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </div>
   </div>
 
   <footer
