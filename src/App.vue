@@ -15,7 +15,7 @@
   </div>
 
   <footer
-    v-if="getOptions.mode !== 'iframe'"
+    v-if="getOptions.footer !== false && getOptions.mode !== 'iframe'"
     class="text-center bg-gray-900 text-sm text-white space-y-4 py-4"
   >
     <div>
@@ -44,7 +44,33 @@
 </template>
 
 <style>
-/* Global transitions */
+/*
+  * Scrollbar
+*/
+
+html {
+  scrollbar-width: thin;
+  scrollbar-width: 6px;
+}
+
+html::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+html::-webkit-scrollbar-track {
+  background: #F9FAFB;
+}
+
+/* Handle */
+html::-webkit-scrollbar-thumb {
+  background: #D1D5DB;
+}
+
+/*
+  * Global Transitions
+*/
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s;
@@ -63,12 +89,9 @@ import { useRoute } from "vue-router"
 
 const route = useRoute()
 const getOptions = computed(() => {
-  const {
-    name,
-    query: { mode }
-  } = route
+  const { name, query } = route
 
-  return { name, mode }
+  return { name, mode: query.mode, footer: query.footer !== "false" }
 })
 
 // Available gradient backgrounds
