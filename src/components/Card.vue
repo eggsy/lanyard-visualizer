@@ -66,8 +66,8 @@
 </template>
 
 <script lang="ts" setup>
-import { useParallax, useMouseInElement } from '@vueuse/core'
-import { defineProps, ref, reactive, computed, watch, onMounted, onBeforeUnmount } from "vue";
+import { useParallax, useMouseInElement, useTimestamp } from '@vueuse/core'
+import { defineProps, ref, reactive, computed, watch } from "vue";
 
 // Components
 import Progress from "./Progress.vue"
@@ -82,13 +82,7 @@ const target = ref(null)
 // Reactive objects
 const parallax = reactive(useParallax(target))
 const imageError = reactive({ large: false, small: false })
-const time = reactive<{
-  instance: NodeJS.Timeout | null,
-  stamp: number
-}>({
-  instance: null,
-  stamp: new Date().getTime()
-})
+const { timestamp } = useTimestamp()
 
 // Is mouse in element?
 const { isOutside } = useMouseInElement(target)
@@ -143,16 +137,6 @@ watch(() => [props.largeImage, props.smallImage], () => {
   if (imageError.small === true) imageError.small = false
 })
 
-onMounted(() => {
-  time.instance = setInterval(() => {
-    time.stamp = new Date().getTime()
-  }, 100)
-})
-
-onBeforeUnmount(() => {
-  if (time.instance) clearInterval(time.instance)
-})
-
 // Computed methods
 const getImageUrl = computed(() => {
   const object = {
@@ -173,30 +157,31 @@ const getTime = computed(() => {
   if (props.isSpotify) return;
 
   const { start, end } = props.timestamps || {}
+  const currentTime = timestamp.value
 
   const mapFunction = (time: number) => `0${time}`.slice(-2);
 
   if (!start && !end) return;
   else if (start && !end) {
-    const timeElapsed = time.stamp - start;
+    const timeElapsed = Math.abs(currentTime - start) / 1000;
 
     const timeElapsedArray = [
-      Math.round((timeElapsed / (1000 * 60 * 60))),
-      Math.round((timeElapsed / (1000 * 60)) % 60),
-      Math.round((timeElapsed / 1000) % 60),
+      Math.floor(timeElapsed / 3600) % 24,
+      Math.floor(timeElapsed / 60) % 60,
+      Math.floor(timeElapsed % 60),
     ];
 
     // Remove hours if it's not been an hour
     if (String(timeElapsedArray[0]) === "0") timeElapsedArray.shift()
 
     return `${timeElapsedArray.map(mapFunction).join(":")} elapsed`
-  } else if (start && end) {
-    const timeLeft = end - time.stamp;
+  } else if (end) {
+    const timeLeft = Math.abs(end - (start || timestamp.value)) / 1000;
 
     const timeLeftArray = [
-      Math.round((timeLeft / (1000 * 60 * 60))),
-      Math.round((timeLeft / (1000 * 60)) % 60),
-      Math.round((timeLeft / 1000) % 60),
+      Math.floor(timeLeft / 3600) % 24,
+      Math.floor(timeLeft / 60) % 60,
+      Math.floor(timeLeft % 60),
     ];
 
     // Remove hours if it's not been an hour
@@ -208,7 +193,7 @@ const getTime = computed(() => {
 
 const continerStyles: ComputedRef<CSSProperties> = computed(() => {
   return {
-    transition: "transform .2s",
+    transition: "transform .1s",
     transform:
       isOutside?.value === true ?
         'rotateX(0) rotateY(0' : `rotateX(${parallax.roll * 20}deg) rotateY(${parallax.tilt * 20}deg)`,
