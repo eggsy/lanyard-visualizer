@@ -178,7 +178,7 @@ const getTime = computed(() => {
 
     return `${timeElapsedArray.map(mapFunction).join(":")} elapsed`
   } else if (end) {
-    const timeLeft = Math.abs(end - (start || timestamp.value)) / 1000;
+    const timeLeft = Math.abs(end - timestamp.value) / 1000;
 
     const timeLeftArray = [
       Math.floor(timeLeft / 3600) % 24,
