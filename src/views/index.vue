@@ -30,7 +30,17 @@
         />
 
         <router-link
-          :to="userId !== '' ? `/user/${userId}` : '/'"
+          :to="
+            userId !== ''
+              ? {
+                  name: 'User',
+                  params: {
+                    id: userId
+                  },
+                  query
+                }
+              : { name: 'Home' }
+          "
           class="btn text-center md:w-max"
           >Submit</router-link
         >
@@ -49,6 +59,7 @@
 
 <script lang="ts" setup>
 import { onStartTyping, useTitle } from "@vueuse/core";
+import { useRoute } from "vue-router";
 import { ref } from "vue";
 
 // Types
@@ -60,6 +71,9 @@ import Card from "../components/Card.vue";
 // References
 const userId = ref("");
 const input: Ref<HTMLInputElement | null> = ref(null);
+
+// Get query from the route
+const { query } = useRoute()
 
 // Hooks
 useTitle("Lanyard Visualizer")
