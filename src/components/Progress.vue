@@ -7,19 +7,14 @@
   </div>
 
   <div class="flex items-center justify-between">
-    <span>{{ getTime.elapsed }}</span>
-    <span>{{ getTime.left }}</span>
+    <span>{{ getTimeElapsed }}</span>
+    <span>{{ getTimeLeft }}</span>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {
-  computed,
-  defineProps,
-  onBeforeUnmount,
-  onMounted,
-  reactive
-} from "vue"
+import { useTimestamp } from "@vueuse/core"
+import { computed, defineProps } from "vue"
 
 const props = defineProps({
   start: {
@@ -35,39 +30,25 @@ const props = defineProps({
 })
 
 // Use a reference to generate reactive time.
-const time = reactive<{
-  instance: NodeJS.Timeout | null
-  stamp: number
-}>({
-  instance: null,
-  stamp: new Date().getTime()
-})
+const { timestamp } = useTimestamp()
 
-// Updated reactive time every 100 milliseconds.
-onMounted(() => {
-  setInterval(() => {
-    time.stamp = new Date().getTime()
-  }, 100)
-})
-
-onBeforeUnmount(() => {
-  if (time.instance) clearInterval(time.instance)
-})
-
-/**
- * Returns elapsed and left time information.
- */
-const getTime = computed(() => {
-  if (props.start === 0 && props.end === 0)
-    return { elapsed: "00:00", left: "00:00" }
-
-  const timeElapsed = time.stamp - props.start
-  const timeLeft = props.end - time.stamp
+// Computed methods
+const getTimeElapsed = computed(() => {
+  const currentTime = timestamp.value
+  const timeElapsed = currentTime - props.start
 
   const timeElapsedArray = [
     Math.round((timeElapsed / (1000 * 60)) % 60),
     Math.round((timeElapsed / 1000) % 60)
   ]
+
+  const mapFunction = (time: number) => `0${time}`.slice(-2)
+  return timeElapsedArray.map(mapFunction).join(":")
+})
+
+const getTimeLeft = computed(() => {
+  const currentTime = timestamp.value
+  const timeLeft = props.end - (props.start || currentTime)
 
   const timeLeftArray = [
     Math.round((timeLeft / (1000 * 60)) % 60),
@@ -75,19 +56,12 @@ const getTime = computed(() => {
   ]
 
   const mapFunction = (time: number) => `0${time}`.slice(-2)
-
-  return {
-    elapsed: timeElapsedArray.map(mapFunction).join(":"),
-    left: timeLeftArray.map(mapFunction).join(":")
-  }
+  return timeLeftArray.map(mapFunction).join(":")
 })
 
-/**
- * Returns the width percentage of progress bar.
- */
 const getStyles = computed(() => {
   const total = props.end - props.start
-  const progress = 100 - (100 * (props.end - time.stamp)) / total
+  const progress = 100 - (100 * (props.end - timestamp.value)) / total
 
   if (progress > 100)
     return {
