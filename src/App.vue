@@ -1,11 +1,7 @@
 <template>
   <div
-    class="bg-gradient-to-tl min-h-screen text-white px-4 md:px-0"
-    :class="{
-      [background]: true,
-      'flex items-center justify-center':
-        getOptions.name !== 'User' || getOptions.mode !== 'iframe'
-    }"
+    class="bg-gradient-to-tl min-h-screen text-white px-4 flex items-center justify-center"
+    :class="background"
   >
     <router-view v-slot="{ Component }">
       <transition name="fade" mode="out-in">
