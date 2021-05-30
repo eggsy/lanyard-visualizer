@@ -8,7 +8,7 @@
 
         <p class="text-shadow-sm md:w-4/5">
           <a
-            href="https://discord.gg/wscam7vngf"
+            href="https://lanyard.rest/discord"
             title="Join Discord"
             target="_blank"
             rel="noreferrer"
