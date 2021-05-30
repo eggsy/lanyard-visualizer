@@ -37,9 +37,17 @@
       </p>
     </div>
 
-    <p v-if="getOptions.name !== 'Home'">
-      <router-link to="/" class="btn">Go back home</router-link>
-    </p>
+    <div v-if="getOptions.name !== 'Home'">
+      <router-link
+        :to="{
+          name: 'Home',
+          query: getOptions.query
+        }"
+        class="btn"
+      >
+        Go back home
+      </router-link>
+    </div>
   </footer>
 </template>
 
@@ -59,12 +67,12 @@ html::-webkit-scrollbar {
 
 /* Track */
 html::-webkit-scrollbar-track {
-  background: #F9FAFB;
+  background: #f9fafb;
 }
 
 /* Handle */
 html::-webkit-scrollbar-thumb {
-  background: #D1D5DB;
+  background: #d1d5db;
 }
 
 /*
@@ -91,7 +99,7 @@ const route = useRoute()
 const getOptions = computed(() => {
   const { name, query } = route
 
-  return { name, mode: query.mode, footer: query.footer !== "false" }
+  return { name, query, mode: query.mode, footer: query.footer !== "false" }
 })
 
 // Available gradient backgrounds
