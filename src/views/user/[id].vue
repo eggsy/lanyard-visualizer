@@ -1,6 +1,9 @@
 <template>
   <transition name="fade" mode="out-in">
-    <div v-if="user.error === true" class="md:w-2/4 space-y-4 text-center md:text-left">
+    <div
+      v-if="user.error === true"
+      class="md:w-2/4 space-y-4 text-center md:text-left"
+    >
       <h1 class="font-bold text-2xl text-white text-shadow-md">
         Couldn't establish a WS connection to Lanyard API for this user
       </h1>
@@ -9,7 +12,7 @@
         Make sure you entered a valid Discord user ID and make sure the user is
         in
         <a
-          href="https://discord.gg/wscam7vngf"
+          href="https://lanyard.rest/discord"
           title="Join Discord"
           class="underline"
           rel="noreferrer"
@@ -26,7 +29,7 @@
       </div>
     </div>
 
-    <div v-else class="md:w-5/12 2xl:w-3/12 flex flex-col space-y-4">
+    <div v-else class="w-full md:w-5/12 2xl:w-3/12 flex flex-col space-y-4">
       <div class="flex items-center justify-between">
         <div class="flex items-center space-x-2">
           <div class="flex-shrink-0">
@@ -62,16 +65,16 @@
 
       <div>
         <Card
-          v-if="getPlayingStatus?.name"
+          v-if="!!getPlayingStatus"
           :class="isConnecting && 'animate-pulse'"
-          :name="getPlayingStatus?.name"
-          :largeImage="getPlayingStatus?.largeImage || ''"
-          :smallImage="getPlayingStatus?.smallImage || ''"
-          :state="getPlayingStatus?.state"
-          :details="getPlayingStatus?.details"
-          :timestamps="getPlayingStatus?.timestamps"
-          :is-spotify="getPlayingStatus?.spotify === true"
-          :track-id="getPlayingStatus?.trackId"
+          :name="getPlayingStatus.name"
+          :largeImage="getPlayingStatus.largeImage || ''"
+          :smallImage="getPlayingStatus.smallImage || ''"
+          :state="getPlayingStatus.state"
+          :details="getPlayingStatus.details"
+          :timestamps="getPlayingStatus.timestamps"
+          :is-spotify="getPlayingStatus.spotify === true"
+          :track-id="getPlayingStatus.trackId"
         />
 
         <div v-else class="bg-gray-100 bg-opacity-20 rounded-lg p-4">
