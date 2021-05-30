@@ -1,7 +1,7 @@
 <template>
   <div
     ref="target"
-    class="space-y-4 flex flex-col p-4 bg-gray-100 bg-opacity-20 shadow-lg rounded-lg"
+    class="space-y-4 overflow-x-hidden flex flex-col p-4 bg-gray-100 bg-opacity-20 shadow-lg rounded-lg"
     :style="continerStyles"
   >
     <div class="flex items-center space-x-4">
@@ -11,24 +11,24 @@
           width="128"
           height="128"
           draggable="false"
-          alt="large image"
+          alt="Large image"
           class="rounded-xl h-28 w-28"
           @error="imageError.large = true"
         />
 
         <img
           v-if="getImageUrl?.smallImage"
-          :src="getImageUrl?.smallImage"
+          :src="getImageUrl.smallImage"
           width="16"
           height="16"
           draggable="false"
-          alt="small image"
+          alt="Small image"
           class="rounded-full absolute bg-gray-100 bg-opacity-20 h-6 w-6 bottom-0 right-0 ring-4 ring-gray-100 ring-opacity-20"
           @error="imageError.small = true"
         />
       </div>
 
-      <div class="overflow-x-hidden space-y-px">
+      <div class="overflow-x-hidden truncate space-y-px">
         <a
           v-if="isSpotify && trackId"
           :href="`https://open.spotify.com/track/${trackId}`"
@@ -36,8 +36,9 @@
           rel="noreferrer"
           title="Open on Spotify"
           class="font-semibold leading-tight text-lg truncate hover:underline cursor-pointer"
-          >{{ name }}</a
         >
+          {{ name }}
+        </a>
 
         <h1 v-else class="font-semibold leading-tight text-lg truncate">
           {{ name }}
@@ -54,8 +55,9 @@
         <span
           v-if="!isSpotify && getTime"
           class="opacity-90 leading-tight truncate"
-          >{{ getTime }}</span
         >
+          {{ getTime }}
+        </span>
       </div>
     </div>
 
