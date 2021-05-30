@@ -38,7 +38,7 @@ Starting in development mode will provide hot reloading, PRs and issues are alwa
 
 These are the technologies I used to create this website! This was my first time trying out Vue 3 (together with TypeScript, Vite, VueUse and Windi CSS) for an actual project and I'm obsessed with it now!
 
-- [Lanyard API](https://github.com/phineas/lanyard) by @phineas
-- [Vue 3](https://vuejs.org) by @yyx990803
+- [Lanyard API](https://github.com/phineas/lanyard) by [@phineas](https://github.com/phineas)
+- [Vue 3](https://vuejs.org) by [@yyx990803](https://github.com/yyx990803)
 - [Windi CSS](https://windicss.org)
 - [VueUse](https://vueuse.org/)
