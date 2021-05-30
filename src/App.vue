@@ -27,7 +27,7 @@
         <a
           href="https://github.com/eggsy/lanyard-visualizer"
           rel="noreferrer"
-          class="block underline"
+          class="block underline w-max mx-auto"
           >Source available on GitHub!</a
         >
       </p>
