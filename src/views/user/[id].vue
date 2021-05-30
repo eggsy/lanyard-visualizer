@@ -23,14 +23,18 @@
       </p>
 
       <div>
-        <router-link to="/" class="btn">
-          Go back home
-        </router-link>
+        <router-link :to="{ name: '/', query }" class="btn"
+          >Go back home</router-link
+        >
       </div>
     </div>
 
-    <div v-else class="w-full md:w-5/12 2xl:w-3/12 flex flex-col space-y-4">
-      <div class="flex items-center justify-between">
+    <div
+      v-else
+      class="w-full flex flex-col space-y-4"
+      :class="mode !== 'iframe' && 'md:w-5/12 2xl:w-3/12'"
+    >
+      <div v-if="title === true" class="flex items-center justify-between">
         <div class="flex items-center space-x-2">
           <div class="flex-shrink-0">
             <img
@@ -91,8 +95,8 @@
 
 <script lang="ts" setup>
 import { useWebSocket, useTitle, useFavicon } from "@vueuse/core"
-import { onBeforeRouteLeave, useRoute } from "vue-router"
 import { computed, ref, reactive, watch } from "vue";
+import { onBeforeRouteLeave, useRoute } from "vue-router"
 
 // Components
 import Card from "../../components/Card.vue"
@@ -103,7 +107,10 @@ import type { LanyardData } from "../../types/lanyard";
 // References
 const socketLoaded = ref(false);
 const imageError = ref(false);
-const { params } = useRoute()
+const { params, query } = useRoute()
+
+// Reactive objects
+const { mode, title } = reactive({ mode: query.mode, title: query.title || true })
 const user = reactive({ error: false, data: {} }) as { error: boolean, data: LanyardData };
 
 // Computed methods
