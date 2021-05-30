@@ -29,9 +29,8 @@
             name: 'Home'
           }"
           class="btn"
+          >Go back home</router-link
         >
-          Go back home
-        </router-link>
       </div>
     </div>
 
@@ -75,7 +74,10 @@
 
       <div>
         <Card
-          v-if="!!getPlayingStatus"
+          v-if="
+            Object.values(getPlayingStatus || {}).filter(item => item)?.length >
+              0
+          "
           :class="isConnecting && 'animate-pulse'"
           :name="getPlayingStatus.name"
           :largeImage="getPlayingStatus.largeImage || ''"
@@ -173,7 +175,14 @@ const getPlayingStatus = computed(() => {
       trackId,
     };
   } else {
-    const { details, state, name, application_id, assets, timestamps } = user.data?.activities?.filter(activity => activity.type === 0)?.pop() || {}
+    const {
+      details,
+      state,
+      name,
+      application_id,
+      assets,
+      timestamps
+    } = user.data?.activities?.filter(activity => activity.type === 0)?.pop() || {}
 
     let largeImage, smallImage;
 
@@ -184,7 +193,12 @@ const getPlayingStatus = computed(() => {
     }
 
     return {
-      details, state, name, largeImage, smallImage, timestamps
+      details,
+      state,
+      name,
+      largeImage,
+      smallImage,
+      timestamps
     }
   };
 });
