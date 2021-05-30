@@ -68,13 +68,13 @@ const { query } = useRoute()
 const getTarget = computed(() => {
   if (userId.value !== '') {
     return {
+      query,
       name: 'User',
       params: {
         id: userId.value
       },
-      query
     }
-}
+  }
   else return { name: 'Home', query }
 })
 
