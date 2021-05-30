@@ -35,14 +35,12 @@
       </div>
     </div>
 
-    <div>
-      <Card
-        name="Lanyard Visualizer"
-        details="by EGGSY"
-        state="on GitHub, open-source"
-        :timestamps="{ start: new Date().getTime() }"
-      />
-    </div>
+    <Card
+      name="Lanyard Visualizer"
+      details="by EGGSY"
+      state="on GitHub, open-source"
+      :timestamps="{ start: new Date().getTime() }"
+    />
   </div>
 </template>
 
