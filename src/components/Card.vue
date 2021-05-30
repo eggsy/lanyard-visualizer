@@ -67,7 +67,7 @@
 
 <script lang="ts" setup>
 import { useParallax, useMouseInElement } from '@vueuse/core'
-import { defineProps, ref, reactive, computed, watch, onMounted } from "vue";
+import { defineProps, ref, reactive, computed, watch, onMounted, onBeforeUnmount } from "vue";
 
 // Components
 import Progress from "./Progress.vue"
@@ -77,11 +77,20 @@ import type { PropType, CSSProperties, ComputedRef } from "vue"
 import type { Timestamps } from "../types/lanyard";
 
 // References
-const time = ref(new Date().getTime())
-const imageError = reactive({ large: false, small: false })
 const target = ref(null)
 
+// Reactive objects
 const parallax = reactive(useParallax(target))
+const imageError = reactive({ large: false, small: false })
+const time = reactive<{
+  instance: NodeJS.Timeout | null,
+  stamp: number
+}>({
+  instance: null,
+  stamp: new Date().getTime()
+})
+
+// Is mouse in element?
 const { isOutside } = useMouseInElement(target)
 
 // Props
@@ -135,9 +144,13 @@ watch(() => [props.largeImage, props.smallImage], () => {
 })
 
 onMounted(() => {
-  setInterval(() => {
-    time.value = new Date().getTime()
+  time.instance = setInterval(() => {
+    time.stamp = new Date().getTime()
   }, 100)
+})
+
+onBeforeUnmount(() => {
+  if (time.instance) clearInterval(time.instance)
 })
 
 // Computed methods
@@ -165,12 +178,12 @@ const getTime = computed(() => {
 
   if (!start && !end) return;
   else if (start && !end) {
-    const timeElapsed = time.value - start;
+    const timeElapsed = time.stamp - start;
 
     const timeElapsedArray = [
       Math.round((timeElapsed / (1000 * 60 * 60))),
-      Math.round((timeElapsed / (1000 * 60)) % 59),
-      Math.round((timeElapsed / 1000) % 59),
+      Math.round((timeElapsed / (1000 * 60)) % 60),
+      Math.round((timeElapsed / 1000) % 60),
     ];
 
     // Remove hours if it's not been an hour
@@ -178,12 +191,12 @@ const getTime = computed(() => {
 
     return `${timeElapsedArray.map(mapFunction).join(":")} elapsed`
   } else if (start && end) {
-    const timeLeft = end - time.value;
+    const timeLeft = end - time.stamp;
 
     const timeLeftArray = [
       Math.round((timeLeft / (1000 * 60 * 60))),
-      Math.round((timeLeft / (1000 * 60)) % 59),
-      Math.round((timeLeft / 1000) % 59),
+      Math.round((timeLeft / (1000 * 60)) % 60),
+      Math.round((timeLeft / 1000) % 60),
     ];
 
     // Remove hours if it's not been an hour

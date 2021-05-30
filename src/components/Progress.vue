@@ -13,7 +13,13 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, defineProps, onMounted, ref } from "vue"
+import {
+  computed,
+  defineProps,
+  onBeforeUnmount,
+  onMounted,
+  reactive
+} from "vue"
 
 const props = defineProps({
   start: {
@@ -29,13 +35,23 @@ const props = defineProps({
 })
 
 // Use a reference to generate reactive time.
-const time = ref(new Date().getTime())
+const time = reactive<{
+  instance: NodeJS.Timeout | null
+  stamp: number
+}>({
+  instance: null,
+  stamp: new Date().getTime()
+})
 
 // Updated reactive time every 100 milliseconds.
 onMounted(() => {
   setInterval(() => {
-    time.value = new Date().getTime()
+    time.stamp = new Date().getTime()
   }, 100)
+})
+
+onBeforeUnmount(() => {
+  if (time.instance) clearInterval(time.instance)
 })
 
 /**
@@ -45,17 +61,17 @@ const getTime = computed(() => {
   if (props.start === 0 && props.end === 0)
     return { elapsed: "00:00", left: "00:00" }
 
-  const timeElapsed = time.value - props.start
-  const timeLeft = props.end - time.value
+  const timeElapsed = time.stamp - props.start
+  const timeLeft = props.end - time.stamp
 
   const timeElapsedArray = [
-    Math.round((timeElapsed / (1000 * 60)) % 59),
-    Math.round((timeElapsed / 1000) % 59)
+    Math.round((timeElapsed / (1000 * 60)) % 60),
+    Math.round((timeElapsed / 1000) % 60)
   ]
 
   const timeLeftArray = [
-    Math.round((timeLeft / (1000 * 60)) % 59),
-    Math.round((timeLeft / 1000) % 59)
+    Math.round((timeLeft / (1000 * 60)) % 60),
+    Math.round((timeLeft / 1000) % 60)
   ]
 
   const mapFunction = (time: number) => `0${time}`.slice(-2)
@@ -71,7 +87,7 @@ const getTime = computed(() => {
  */
 const getStyles = computed(() => {
   const total = props.end - props.start
-  const progress = 100 - (100 * (props.end - time.value)) / total
+  const progress = 100 - (100 * (props.end - time.stamp)) / total
 
   if (progress > 100)
     return {
