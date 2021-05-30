@@ -23,9 +23,15 @@
       </p>
 
       <div>
-        <router-link :to="{ name: '/', query }" class="btn"
-          >Go back home</router-link
+        <router-link
+          :to="{
+            query,
+            name: 'Home'
+          }"
+          class="btn"
         >
+          Go back home
+        </router-link>
       </div>
     </div>
 
