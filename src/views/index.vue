@@ -29,19 +29,7 @@
           type="text"
         />
 
-        <router-link
-          :to="
-            userId !== ''
-              ? {
-                  name: 'User',
-                  params: {
-                    id: userId
-                  },
-                  query
-                }
-              : { name: 'Home' }
-          "
-          class="btn text-center md:w-max"
+        <router-link :to="getTarget" class="btn text-center md:w-max"
           >Submit</router-link
         >
       </div>
@@ -52,6 +40,7 @@
         name="Lanyard Visualizer"
         details="by EGGSY"
         state="on GitHub, open-source"
+        :timestamps="{ start: new Date().getTime() }"
       />
     </div>
   </div>
@@ -60,7 +49,7 @@
 <script lang="ts" setup>
 import { onStartTyping, useTitle } from "@vueuse/core";
 import { useRoute } from "vue-router";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 // Types
 import type { Ref } from "vue"
@@ -74,6 +63,20 @@ const input: Ref<HTMLInputElement | null> = ref(null);
 
 // Get query from the route
 const { query } = useRoute()
+
+// Computed methods
+const getTarget = computed(() => {
+  if (userId.value !== '') {
+    return {
+      name: 'User',
+      params: {
+        id: userId.value
+      },
+      query
+    }
+}
+  else return { name: 'Home', query }
+})
 
 // Hooks
 useTitle("Lanyard Visualizer")
