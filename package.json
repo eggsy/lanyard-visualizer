@@ -1,6 +1,6 @@
 {
-  "name": "vue-vite-lanyard-example",
-  "description": "Vue + Vite + Tailwind CSS + Lanyard API example with progressbar and real-time data.",
+  "name": "lanyard-visualizer",
+  "description": "A beautiful Lanyard visualizer tool to display your Discord status online! Works with Spotify and all RPCs!",
   "license": "MIT",
   "version": "1.0.0",
   "author": {
