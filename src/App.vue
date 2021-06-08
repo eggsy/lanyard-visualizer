@@ -1,7 +1,7 @@
 <template>
   <div
     class="bg-gradient-to-tl min-h-screen text-white px-4 flex items-center justify-center"
-    :class="background"
+    :class="getOptions.background === true ? background : 'bg-black'"
   >
     <div class="container mx-auto">
       <router-view v-slot="{ Component }">
@@ -14,7 +14,7 @@
 
   <footer
     v-if="getOptions.footer !== false && getOptions.mode !== 'iframe'"
-    class="text-center bg-gray-900 text-sm text-white space-y-4 py-4"
+    class="text-center text-gray-900 text-sm text-white space-y-4 py-4"
   >
     <div>
       <p>
@@ -41,7 +41,7 @@
           name: 'Home',
           query: getOptions.query
         }"
-        class="btn"
+        class="btn text-black"
       >
         Go back home
       </router-link>
@@ -97,14 +97,22 @@ const route = useRoute()
 const getOptions = computed(() => {
   const { name, query } = route
 
-  return { name, query, mode: query.mode, footer: query.footer !== "false" }
+  return {
+    name,
+    query,
+    mode: query.mode,
+    background: query.background !== "false",
+    footer: query.footer !== "false"
+  }
 })
 
 // Available gradient backgrounds
 const backgrounds = [
   "from-blue-400 via-blue-500 to-blue-600",
   "from-indigo-400 via-indigo-500 to-indigo-600",
-  "from-red-300 via-red-400 to-red-500"
+  "from-red-300 via-red-400 to-red-500",
+  "bg-black",
+  "bg-gray-700"
 ]
 
 // Background reference
