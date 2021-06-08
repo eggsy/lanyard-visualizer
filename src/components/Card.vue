@@ -84,7 +84,7 @@ const target = ref(null)
 // Reactive objects
 const parallax = reactive(useParallax(target))
 const imageError = reactive({ large: false, small: false })
-const { timestamp } = useTimestamp()
+const timestamp = useTimestamp()
 
 // Is mouse in element?
 const { isOutside } = useMouseInElement(target)
