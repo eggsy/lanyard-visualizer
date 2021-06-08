@@ -30,7 +30,7 @@ const props = defineProps({
 })
 
 // Use a reference to generate reactive time.
-const { timestamp } = useTimestamp()
+const timestamp = useTimestamp()
 
 // Computed methods
 const getTimeElapsed = computed(() => {
