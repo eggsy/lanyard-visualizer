@@ -6,7 +6,7 @@ specifiers:
   '@vue/compiler-sfc': ^3.1.1
   '@vue/eslint-config-prettier': ^6.0.0
   '@vue/eslint-config-typescript': ^7.0.0
-  '@vueuse/core': ^5.0.1
+  '@vueuse/core': ^5.0.2
   eslint: ^7.28.0
   eslint-plugin-prettier: ^3.4.0
   eslint-plugin-vue: ^7.10.0
@@ -19,7 +19,7 @@ specifiers:
   windicss: ^3.1.3
 
 dependencies:
-  '@vueuse/core': 5.0.1_vue@3.1.1
+  '@vueuse/core': 5.0.2_vue@3.1.1
   vue: 3.1.1
   vue-router: 4.0.8_vue@3.1.1
 
@@ -416,18 +416,18 @@ packages:
   /@vue/shared/3.1.1:
     resolution: {integrity: sha512-g+4pzAw7PYSjARtLBoDq6DmcblX8i9KJHSCnyM5VDDFFifUaUT9iHbFpOF/KOizQ9f7QAqU2JH3Y6aXjzUMhVA==}
 
-  /@vueuse/core/5.0.1_vue@3.1.1:
-    resolution: {integrity: sha512-hzcyYNvW1p9ZEwm+oBaWrHgGx6S93pJBiXLZUj2pgCNiJZjaedoePT9xzesi1SBxeKcYxwToaTISLeKdE4VKeg==}
+  /@vueuse/core/5.0.2_vue@3.1.1:
+    resolution: {integrity: sha512-Sp9+7AL4Cg3Tx6I55WoH7zICGRlp6ZUF9NW3EU8SZTkryHm0afAjFfASMwlfV030JFeh45BdqafDOrenVmM9Cw==}
     dependencies:
-      '@vueuse/shared': 5.0.1_vue@3.1.1
+      '@vueuse/shared': 5.0.2_vue@3.1.1
       vue-demi: 0.9.1_vue@3.1.1
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
     dev: false
 
-  /@vueuse/shared/5.0.1_vue@3.1.1:
-    resolution: {integrity: sha512-/+kRII9chn45PhFfRuPVbSQApJHhhqXFhPrWjnYKckMfQE9ZOuNMb1bmQnDTqzuNkoS/ENeHBMq0rnV/cfz/3Q==}
+  /@vueuse/shared/5.0.2_vue@3.1.1:
+    resolution: {integrity: sha512-S1hRRmEdipjTD4DbXgPdw4ZZYebU/nDi75vNP3Ibpa1irW3NUNUKOT/TWnwRHLQvXquUtdvalhI8D9Db+czZJg==}
     dependencies:
       vue-demi: 0.9.1_vue@3.1.1
     transitivePeerDependencies:
