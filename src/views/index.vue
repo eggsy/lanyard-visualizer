@@ -1,48 +1,3 @@
-<template>
-  <div class="grid md:grid-cols-2 items-center gap-12">
-    <div class="flex text-center md:text-left flex-col space-y-4">
-      <div>
-        <h1 class="text-2xl md:text-4xl font-bold text-shadow-md text-white">
-          Lanyard Visualizer
-        </h1>
-
-        <p class="text-shadow-sm md:w-4/5">
-          <a
-            href="https://lanyard.rest/discord"
-            title="Join Discord"
-            target="_blank"
-            rel="noreferrer"
-            class="underline"
-            >Lanyard</a
-          >
-          visualizer example built with Vue, Vite, TypeScript and Windi CSS
-        </p>
-      </div>
-
-      <div class="flex flex-col space-y-2">
-        <input
-          ref="input"
-          v-model="userId"
-          placeholder="Enter user ID..."
-          class="appearence-none hover:(shadow-lg) text-gray-100 bg-opacity-30 rounded-lg px-4 py-2 bg-gray-200 outline-none transition-all placeholder-gray-100 focus:(shadow-lg) md:w-3/4"
-          autocomplete="on"
-          type="text"
-        />
-
-        <router-link :to="getTarget" class="btn text-center md:w-max"
-          >Submit</router-link
-        >
-      </div>
-    </div>
-
-    <Card
-      name="Lanyard Visualizer"
-      details="by EGGSY"
-      state="on GitHub, open-source"
-      :timestamps="{ start: new Date().getTime() }"
-    />
-  </div>
-</template>
 
 <script lang="ts" setup>
 import { onStartTyping, useTitle } from "@vueuse/core";
@@ -83,3 +38,45 @@ onStartTyping(() => {
   input?.value?.focus();
 });
 </script>
+
+
+<template>
+  <div class="grid gap-12 items-center md:grid-cols-2">
+    <div class="flex flex-col space-y-4 text-center md:text-left">
+      <div>
+        <h1 class="font-bold text-shadow-md text-white text-2xl md:text-4xl">Lanyard Visualizer</h1>
+
+        <p class="text-shadow-sm md:w-4/5">
+          <a
+            href="https://lanyard.rest/discord"
+            title="Join Discord"
+            target="_blank"
+            rel="noreferrer"
+            class="underline"
+          >Lanyard</a>
+          visualizer example built with Vue, Vite, TypeScript and Windi CSS
+        </p>
+      </div>
+
+      <div class="flex flex-col space-y-2">
+        <input
+          ref="input"
+          v-model="userId"
+          placeholder="Enter user ID..."
+          class="rounded-lg outline-none bg-opacity-30 bg-gray-200 py-2 px-4 placeholder-gray-100 transition-all text-gray-100 appearence-none md:w-3/4 hover:(shadow-lg) focus:(shadow-lg)"
+          autocomplete="on"
+          type="text"
+        />
+
+        <router-link :to="getTarget" class="text-center btn md:w-max">Submit</router-link>
+      </div>
+    </div>
+
+    <Card
+      name="Lanyard Visualizer"
+      details="by EGGSY"
+      state="on GitHub, open-source"
+      :timestamps="{ start: new Date().getTime() }"
+    />
+  </div>
+</template>

@@ -1,106 +1,3 @@
-<template>
-  <transition name="fade" mode="out-in">
-    <div
-      v-if="user.error === true"
-      class="md:w-2/4 mx-auto space-y-4 text-center md:text-left"
-    >
-      <h1 class="font-bold text-2xl text-white text-shadow-md">
-        Couldn't establish a WS connection to Lanyard API for this user
-      </h1>
-
-      <p class="text-gray-100">
-        Make sure you entered a valid Discord user ID and make sure the user is
-        in
-        <a
-          href="https://lanyard.rest/discord"
-          title="Join Discord"
-          class="underline"
-          rel="noreferrer"
-          target="_blank"
-          >Lanyard's Discord server</a
-        >. Reload the page after you join the Discord server or try with an user
-        ID who is already in Discord.
-      </p>
-
-      <div>
-        <router-link
-          :to="{
-            query,
-            name: 'Home'
-          }"
-          class="btn"
-          >Go back home</router-link
-        >
-      </div>
-    </div>
-
-    <div
-      v-else
-      class="w-full mx-auto flex flex-col space-y-4"
-      :class="mode !== 'iframe' && 'md:w-5/12 2xl:w-3/12'"
-    >
-      <div v-if="title === true" class="flex items-center justify-between">
-        <div class="flex items-center space-x-2">
-          <div class="flex-shrink-0">
-            <img
-              :src="getUser.avatar || ''"
-              class="h-14 w-14 rounded-full shadow-lg"
-              width="24"
-              height="24"
-              draggable="false"
-              @error="imageError = true"
-            />
-          </div>
-
-          <div>
-            <h1 class="text-xl leading-tight font-semibold">
-              {{ getUser.username }}
-            </h1>
-
-            <h2 class="text-sm leading-tight opacity-50">
-              #{{ getUser.discriminator }}
-            </h2>
-          </div>
-        </div>
-
-        <a
-          :href="`https://discord.com/users/${getUser.id}`"
-          target="_blank"
-          rel="noreferrer"
-          class="btn"
-          >View User</a
-        >
-      </div>
-
-      <div>
-        <Card
-          v-if="
-            Object.values(getPlayingStatus || {}).filter(item => item)?.length >
-              0
-          "
-          :class="isConnecting && 'animate-pulse'"
-          :name="getPlayingStatus.name"
-          :largeImage="getPlayingStatus.largeImage || ''"
-          :smallImage="getPlayingStatus.smallImage || ''"
-          :state="getPlayingStatus.state"
-          :details="getPlayingStatus.details"
-          :timestamps="getPlayingStatus.timestamps"
-          :is-spotify="getPlayingStatus.spotify === true"
-          :track-id="getPlayingStatus.trackId"
-        />
-
-        <div v-else class="bg-gray-100 bg-opacity-20 rounded-lg p-4">
-          {{
-            isConnecting
-              ? "Trying to establish a WS connection..."
-              : "User is not playing anything."
-          }}
-        </div>
-      </div>
-    </div>
-  </transition>
-</template>
-
 <script lang="ts" setup>
 import { useWebSocket, useTitle, useFavicon } from "@vueuse/core"
 import { computed, ref, reactive, watch } from "vue";
@@ -260,3 +157,96 @@ else {
   })
 }
 </script>
+
+<template>
+  <transition name="fade" mode="out-in">
+    <div v-if="user.error === true" class="mx-auto space-y-4 text-center md:text-left md:w-2/4">
+      <h1
+        class="font-bold text-white text-shadow-md text-2xl"
+      >Couldn't establish a WS connection to Lanyard API for this user</h1>
+
+      <p class="text-gray-100">
+        Make sure you entered a valid Discord user ID and make sure the user is
+        in
+        <a
+          href="https://lanyard.rest/discord"
+          title="Join Discord"
+          class="underline"
+          rel="noreferrer"
+          target="_blank"
+        >Lanyard's Discord server</a>. Reload the page after you join the Discord server or try with an user
+        ID who is already in Discord.
+      </p>
+
+      <div>
+        <router-link
+          :to="{
+            query,
+            name: 'Home'
+          }"
+          class="btn"
+        >Go back home</router-link>
+      </div>
+    </div>
+
+    <div
+      v-else
+      class="flex flex-col mx-auto space-y-4 w-full"
+      :class="mode !== 'iframe' && 'md:w-5/12 2xl:w-3/12'"
+    >
+      <div v-if="title === true" class="flex items-center justify-between">
+        <div class="flex space-x-2 items-center">
+          <div class="flex-shrink-0">
+            <img
+              :src="getUser.avatar || ''"
+              class="rounded-full h-14 shadow-lg w-14"
+              width="24"
+              height="24"
+              draggable="false"
+              @error="imageError = true"
+            />
+          </div>
+
+          <div>
+            <h1 class="font-semibold text-xl leading-tight">{{ getUser.username }}</h1>
+
+            <h2 class="text-sm leading-tight opacity-50">#{{ getUser.discriminator }}</h2>
+          </div>
+        </div>
+
+        <a
+          :href="`https://discord.com/users/${getUser.id}`"
+          target="_blank"
+          rel="noreferrer"
+          class="btn"
+        >View User</a>
+      </div>
+
+      <div>
+        <Card
+          v-if="
+            Object.values(getPlayingStatus || {}).filter(item => item)?.length >
+            0
+          "
+          :class="isConnecting && 'animate-pulse'"
+          :name="getPlayingStatus.name"
+          :largeImage="getPlayingStatus.largeImage || ''"
+          :smallImage="getPlayingStatus.smallImage || ''"
+          :state="getPlayingStatus.state"
+          :details="getPlayingStatus.details"
+          :timestamps="getPlayingStatus.timestamps"
+          :is-spotify="getPlayingStatus.spotify === true"
+          :track-id="getPlayingStatus.trackId"
+        />
+
+        <div v-else class="rounded-lg bg-gray-100 bg-opacity-20 p-4">
+          {{
+            isConnecting
+              ? "Trying to establish a WS connection..."
+              : "User is not playing anything."
+          }}
+        </div>
+      </div>
+    </div>
+  </transition>
+</template>
