@@ -1,7 +1,14 @@
 <script lang="ts" setup>
-import { computed } from "vue"
+import { computed, ref } from "vue"
 import { useRoute } from "vue-router"
 
+// Import compnoents
+import Options from "./components/Options.vue"
+
+// Import backgrounds
+import backgrounds from "./data/backgrounds"
+
+// Component options
 const route = useRoute()
 const getOptions = computed(() => {
   const { name, query } = route
@@ -11,25 +18,22 @@ const getOptions = computed(() => {
     query,
     mode: query.mode,
     background: query.background !== "false",
-    footer: query.footer !== "false"
   }
 })
 
-// Available gradient backgrounds
-const backgrounds = [
-  "from-blue-400 via-blue-500 to-blue-600",
-  "from-indigo-400 via-indigo-500 to-indigo-600",
-  "from-red-300 via-red-400 to-red-500",
-  "bg-black",
-  "bg-gray-700"
-]
+const background = ref(backgrounds[Math.floor(Math.random() * backgrounds.length)])
 
-// Background reference
-const background = backgrounds[Math.floor(Math.random() * backgrounds.length)]
+console.log(background, backgrounds)
+
+const toggleTheme = (theme: string) => {
+  background.value = theme;
+}
 </script>
 
 
 <template>
+  <Options :currentBg="background" @updateTheme="toggleTheme" />
+
   <div
     class="bg-gradient-to-tl flex min-h-screen text-white px-4 items-center justify-center"
     :class="getOptions.background === true ? background : 'bg-black'"
@@ -42,42 +46,6 @@ const background = backgrounds[Math.floor(Math.random() * backgrounds.length)]
       </router-view>
     </div>
   </div>
-
-  <footer
-    v-if="getOptions.footer !== false && getOptions.mode !== 'iframe'"
-    class="space-y-4 text-center text-sm text-white py-4 text-gray-900"
-  >
-    <div>
-      <p>
-        Made by
-        <a href="https://eggsy.xyz" rel="noreferrer" class="underline">EGGSY</a>
-        with 💖 and the power of
-        <a
-          href="https://vuejs.org"
-          rel="noreferrer"
-          class="underline"
-        >Vue 3</a>!
-      </p>
-
-      <p>
-        <a
-          href="https://github.com/eggsy/lanyard-visualizer"
-          rel="noreferrer"
-          class="mx-auto w-max block underline"
-        >Source available on GitHub!</a>
-      </p>
-    </div>
-
-    <div v-if="getOptions.name !== 'Home'">
-      <router-link
-        :to="{
-          name: 'Home',
-          query: getOptions.query
-        }"
-        class="text-black btn"
-      >Go back home</router-link>
-    </div>
-  </footer>
 </template>
 
 <style>
