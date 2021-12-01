@@ -1,72 +1,3 @@
-<template>
-  <div
-    ref="target"
-    class="space-y-4 overflow-x-hidden flex flex-col p-4 bg-gray-100 bg-opacity-20 shadow-lg rounded-lg"
-    :style="continerStyles"
-  >
-    <div class="flex items-center space-x-4">
-      <div class="flex-shrink-0 relative">
-        <img
-          :src="getImageUrl?.largeImage"
-          width="128"
-          height="128"
-          draggable="false"
-          alt="Large image"
-          class="rounded-xl h-28 w-28"
-          @error="imageError.large = true"
-        />
-
-        <img
-          v-if="getImageUrl?.smallImage"
-          :src="getImageUrl.smallImage"
-          width="16"
-          height="16"
-          draggable="false"
-          alt="Small image"
-          class="rounded-full absolute bg-gray-100 bg-opacity-20 h-6 w-6 bottom-0 right-0 ring-4 ring-gray-100 ring-opacity-20"
-          @error="imageError.small = true"
-        />
-      </div>
-
-      <div class="overflow-x-hidden truncate space-y-px">
-        <a
-          v-if="isSpotify && trackId"
-          :href="`https://open.spotify.com/track/${trackId}`"
-          target="_blank"
-          rel="noreferrer"
-          title="Open on Spotify"
-          class="font-semibold leading-tight text-lg truncate hover:underline cursor-pointer"
-        >
-          {{ name }}
-        </a>
-
-        <h1 v-else class="font-semibold leading-tight text-lg truncate">
-          {{ name }}
-        </h1>
-
-        <h2 v-if="details" class="opacity-90 leading-tight line-clamp-2">
-          {{ isSpotify ? "by" : "" }} {{ details }}
-        </h2>
-
-        <h2 v-if="state" class="opacity-90 leading-tight line-clamp-2">
-          {{ isSpotify ? "on" : "" }} {{ state }}
-        </h2>
-
-        <span
-          v-if="!isSpotify && getTime"
-          class="opacity-90 leading-tight truncate"
-        >
-          {{ getTime }}
-        </span>
-      </div>
-    </div>
-
-    <div v-if="isSpotify && timestamps">
-      <Progress :start="timestamps?.start" :end="timestamps?.end" />
-    </div>
-  </div>
-</template>
-
 <script lang="ts" setup>
 import { useParallax, useMouseInElement, useTimestamp } from '@vueuse/core'
 import { defineProps, ref, reactive, computed, watch } from "vue";
@@ -202,3 +133,65 @@ const continerStyles: ComputedRef<CSSProperties> = computed(() => {
   }
 })
 </script>
+
+<template>
+  <div
+    ref="target"
+    class="rounded-lg flex flex-col space-y-4 bg-white/10 p-4 overflow-x-hidden"
+    :style="continerStyles"
+  >
+    <div class="flex space-x-4 items-center">
+      <div class="flex-shrink-0 relative">
+        <img
+          :src="getImageUrl?.largeImage"
+          width="128"
+          height="128"
+          draggable="false"
+          alt="Large image"
+          class="rounded-xl h-28 w-28"
+          @error="imageError.large = true"
+        />
+
+        <img
+          v-if="getImageUrl?.smallImage"
+          :src="getImageUrl.smallImage"
+          width="16"
+          height="16"
+          draggable="false"
+          alt="Small image"
+          class="rounded-full bg-gray-100 bg-opacity-20 h-6 right-0 bottom-0 ring-4 ring-gray-100 ring-opacity-20 w-6 absolute"
+          @error="imageError.small = true"
+        />
+      </div>
+
+      <div class="space-y-px overflow-x-hidden truncate">
+        <a
+          v-if="isSpotify && trackId"
+          :href="`https://open.spotify.com/track/${trackId}`"
+          target="_blank"
+          rel="noreferrer"
+          title="Open on Spotify"
+          class="cursor-pointer font-semibold text-lg leading-tight truncate hover:underline"
+        >{{ name }}</a>
+
+        <h1 v-else class="font-semibold text-lg leading-tight truncate">{{ name }}</h1>
+
+        <h2
+          v-if="details"
+          class="leading-tight opacity-90 line-clamp-2"
+        >{{ isSpotify ? "by" : "" }} {{ details }}</h2>
+
+        <h2
+          v-if="state"
+          class="leading-tight opacity-90 line-clamp-2"
+        >{{ isSpotify ? "on" : "" }} {{ state }}</h2>
+
+        <span v-if="!isSpotify && getTime" class="leading-tight opacity-90 truncate">{{ getTime }}</span>
+      </div>
+    </div>
+
+    <div v-if="isSpotify && timestamps">
+      <Progress :start="timestamps?.start" :end="timestamps?.end" />
+    </div>
+  </div>
+</template>
