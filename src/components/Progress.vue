@@ -1,16 +1,3 @@
-<template>
-  <div class="bg-gray-200 bg-opacity-25 rounded-lg h-2">
-    <div
-      class="transition-all opacity-75 bg-gradient-to-r from-red-500 via-blue-500 to-green-500 rounded-lg h-2"
-      :style="getStyles"
-    ></div>
-  </div>
-
-  <div class="flex items-center justify-between">
-    <span>{{ getTimeElapsed }}</span>
-    <span>{{ getTimeLeft }}</span>
-  </div>
-</template>
 
 <script lang="ts" setup>
 import { useTimestamp } from "@vueuse/core"
@@ -73,3 +60,14 @@ const getStyles = computed(() => {
     }
 })
 </script>
+
+<template>
+  <div class="rounded-lg bg-gray-200/20 h-2">
+    <div class="rounded-lg bg-white/75 h-2 transition-all" :style="getStyles"></div>
+  </div>
+
+  <div class="flex items-center justify-between">
+    <span>{{ getTimeElapsed }}</span>
+    <span>{{ getTimeLeft }}</span>
+  </div>
+</template>
