@@ -32,17 +32,15 @@ const isConnecting = computed(
  */
 const getUser = computed(() => {
   const { username, id, discriminator, avatar } = user.data?.discord_user || {};
+  const fallbackImage = "https://i.imgur.com/sn7gwcA.png"
 
-  const avatarUri = avatar
-    ? `https://cdn.discordapp.com/avatars/${id}/${avatar}.${avatar?.startsWith("a_") ? "gif" : "png"
-    }?size=512`
-    : "https://canary.discord.com/assets/7c8f476123d28d103efe381543274c25.png";
+  const avatarUri = `https://cdn.discordapp.com/avatars/${id}/${avatar}.${avatar?.startsWith("a_") ? "gif" : "png"}?size=512`
 
   return {
     id,
     username: username || "Loading",
     discriminator: discriminator || "0000",
-    avatar: !imageError.value && avatarUri,
+    avatar: avatar && imageError.value === false ? avatarUri : fallbackImage,
   };
 });
 
@@ -145,7 +143,7 @@ else {
     },
 
     // Set the reactive object to data from Lanyard
-    onMessage(ws, { data }) {
+    onMessage(_, { data }) {
       const { t: type, d: status } = JSON.parse(data);
       if (["INIT_STATE", "PRESENCE_UPDATE"].includes(type)) user.data = status;
     },
@@ -203,6 +201,7 @@ else {
               width="24"
               height="24"
               draggable="false"
+              @load="imageError = false"
               @error="imageError = true"
             />
           </div>
