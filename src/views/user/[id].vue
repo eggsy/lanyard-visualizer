@@ -1,22 +1,31 @@
 <script lang="ts" setup>
 import { useWebSocket, useTitle, useFavicon } from "@vueuse/core"
-import { computed, ref, reactive, watch } from "vue";
+import { computed, ref, reactive, watch } from "vue"
 import { onBeforeRouteLeave, useRoute } from "vue-router"
 
 // Components
 import Card from "../../components/Card.vue"
 
 // Types
-import type { LanyardData } from "../../types/lanyard";
+import type { LanyardData } from "../../types/lanyard"
 
 // References
-const socketLoaded = ref(false);
-const imageError = ref(false);
+const socketLoaded = ref(false)
+const imageError = ref(false)
+
+// Composables
 const { params, query } = useRoute()
 
 // Reactive objects
-const { mode, title } = reactive({ mode: query.mode, title: query.title || true })
-const user = reactive({ error: false, data: {} }) as { error: boolean, data: LanyardData };
+const { mode, title } = reactive({
+  mode: query.mode,
+  title: query.title || true,
+})
+
+const user = reactive({ error: false, data: {} }) as {
+  error: boolean
+  data: LanyardData
+}
 
 // Computed methods
 
@@ -25,30 +34,32 @@ const user = reactive({ error: false, data: {} }) as { error: boolean, data: Lan
  */
 const isConnecting = computed(
   () => socketLoaded.value === false && Object.keys(user.data)?.length === 0
-);
+)
 
 /**
  * Returns user information including formatted avatar URL.
  */
 const getUser = computed(() => {
-  const { username, id, discriminator, avatar } = user.data?.discord_user || {};
+  const { username, id, discriminator, avatar } = user.data?.discord_user || {}
   const fallbackImage = "https://i.imgur.com/sn7gwcA.png"
 
-  const avatarUri = `https://cdn.discordapp.com/avatars/${id}/${avatar}.${avatar?.startsWith("a_") ? "gif" : "png"}?size=512`
+  const avatarUri = `https://cdn.discordapp.com/avatars/${id}/${avatar}.${
+    avatar?.startsWith("a_") ? "gif" : "png"
+  }?size=512`
 
   return {
     id,
     username: username || "Loading",
     discriminator: discriminator || "0000",
     avatar: avatar && imageError.value === false ? avatarUri : fallbackImage,
-  };
-});
+  }
+})
 
 /**
  * Returns all essential playing status data in the Spotify object.
  */
 const getPlayingStatus = computed(() => {
-  const isSpotify = user.data?.spotify !== null;
+  const isSpotify = user.data?.spotify !== null
 
   if (isSpotify) {
     const {
@@ -58,7 +69,7 @@ const getPlayingStatus = computed(() => {
       timestamps,
       album_art_url: image,
       track_id: trackId,
-    } = user.data?.spotify || {};
+    } = user.data?.spotify || {}
 
     return {
       timestamps,
@@ -68,23 +79,20 @@ const getPlayingStatus = computed(() => {
       largeImage: image,
       spotify: true,
       trackId,
-    };
+    }
   } else {
-    const {
-      details,
-      state,
-      name,
-      application_id,
-      assets,
-      timestamps
-    } = user.data?.activities?.filter(activity => activity.type === 0)?.pop() || {}
+    const { details, state, name, application_id, assets, timestamps } =
+      user.data?.activities?.filter((activity) => activity.type === 0)?.pop() ||
+      {}
 
-    let largeImage, smallImage;
+    let largeImage, smallImage
 
     if (application_id) {
-      if (assets?.large_image) largeImage = `https://cdn.discordapp.com/app-assets/${application_id}/${assets.large_image}.png`
+      if (assets?.large_image)
+        largeImage = `https://cdn.discordapp.com/app-assets/${application_id}/${assets.large_image}.png`
 
-      if (assets?.small_image) smallImage = `https://cdn.discordapp.com/app-assets/${application_id}/${assets.small_image}.png`
+      if (assets?.small_image)
+        smallImage = `https://cdn.discordapp.com/app-assets/${application_id}/${assets.small_image}.png`
     }
 
     return {
@@ -93,21 +101,26 @@ const getPlayingStatus = computed(() => {
       name,
       largeImage,
       smallImage,
-      timestamps
+      timestamps,
     }
-  };
-});
-
-// Watchers
-watch(() => getUser?.value, (newValue, oldValue) => {
-  if (newValue?.username !== oldValue?.username) useTitle(`${newValue.username}'s Status - Lanyard Visualizer`)
-  if (newValue?.avatar !== oldValue?.avatar) useFavicon(newValue.avatar || "/favicon.ico")
+  }
 })
 
-// Connect to Lanyard socket when the app is mounted
-const userId = params.id;
+// Watchers
+watch(
+  () => getUser?.value,
+  (newValue, oldValue) => {
+    if (newValue?.username !== oldValue?.username)
+      useTitle(`${newValue.username}'s Status - Lanyard Visualizer`)
+    if (newValue?.avatar !== oldValue?.avatar)
+      useFavicon(newValue.avatar || "/favicon.ico")
+  }
+)
 
-if (userId === null || userId?.length < 17) user.error = true;
+// Connect to Lanyard socket when the app is mounted
+const userId = params.id
+
+if (userId === null || userId?.length < 17) user.error = true
 else {
   const { send, close } = useWebSocket("wss://api.lanyard.rest/socket", {
     immediate: true,
@@ -131,12 +144,13 @@ else {
 
     // Subscribe to the user WS is connected
     onConnected() {
-      send(JSON.stringify({
-        op: 2,
-        d: {
-          subscribe_to_id: userId,
-        },
-      })
+      send(
+        JSON.stringify({
+          op: 2,
+          d: {
+            subscribe_to_id: userId,
+          },
+        })
       )
 
       socketLoaded.value = true
@@ -144,8 +158,8 @@ else {
 
     // Set the reactive object to data from Lanyard
     onMessage(_, { data }) {
-      const { t: type, d: status } = JSON.parse(data);
-      if (["INIT_STATE", "PRESENCE_UPDATE"].includes(type)) user.data = status;
+      const { t: type, d: status } = JSON.parse(data)
+      if (["INIT_STATE", "PRESENCE_UPDATE"].includes(type)) user.data = status
     },
   })
 
@@ -158,10 +172,13 @@ else {
 
 <template>
   <transition name="fade" mode="out-in">
-    <div v-if="user.error === true" class="mx-auto space-y-4 text-center md:text-left md:w-2/4">
-      <h1
-        class="font-bold text-white text-shadow-md text-2xl"
-      >Couldn't establish a WS connection to Lanyard API for this user</h1>
+    <div
+      v-if="user.error === true"
+      class="mx-auto space-y-4 text-center md:text-left md:w-2/4"
+    >
+      <h1 class="font-bold text-white text-shadow-md text-2xl">
+        Couldn't establish a WS connection to Lanyard API for this user
+      </h1>
 
       <p class="text-gray-100">
         Make sure you entered a valid Discord user ID and make sure the user is
@@ -172,7 +189,8 @@ else {
           class="underline"
           rel="noreferrer"
           target="_blank"
-        >Lanyard's Discord server</a>. Reload the page after you join the Discord server or try with an user
+          >Lanyard's Discord server</a
+        >. Reload the page after you join the Discord server or try with an user
         ID who is already in Discord.
       </p>
 
@@ -180,10 +198,11 @@ else {
         <router-link
           :to="{
             query,
-            name: 'Home'
+            name: 'Home',
           }"
           class="btn"
-        >Go back home</router-link>
+          >Go back home</router-link
+        >
       </div>
     </div>
 
@@ -201,15 +220,20 @@ else {
               width="24"
               height="24"
               draggable="false"
+              alt="user avatar"
               @load="imageError = false"
               @error="imageError = true"
             />
           </div>
 
           <div>
-            <h1 class="font-semibold text-xl leading-tight">{{ getUser.username }}</h1>
+            <h1 class="font-semibold text-xl leading-tight">
+              {{ getUser.username }}
+            </h1>
 
-            <h2 class="text-sm leading-tight opacity-50">#{{ getUser.discriminator }}</h2>
+            <h2 class="text-sm leading-tight opacity-50">
+              #{{ getUser.discriminator }}
+            </h2>
           </div>
         </div>
 
@@ -218,14 +242,15 @@ else {
           target="_blank"
           rel="noreferrer"
           class="btn"
-        >View User</a>
+          >View User</a
+        >
       </div>
 
       <div>
         <Card
           v-if="
-            Object.values(getPlayingStatus || {}).filter(item => item)?.length >
-            0
+            Object.values(getPlayingStatus || {}).filter((item) => item)
+              ?.length > 0
           "
           :class="isConnecting && 'animate-pulse'"
           :name="getPlayingStatus.name"
