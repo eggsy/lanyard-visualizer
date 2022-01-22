@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { ref, computed } from "vue";
-import { useRoute } from "vue-router";
+import { ref, computed } from "vue"
+import { useRoute } from "vue-router"
 
 // Import backgrounds
 import backgrounds from "../data/backgrounds"
@@ -8,10 +8,10 @@ import backgrounds from "../data/backgrounds"
 defineProps({
   currentBg: {
     type: String,
-  }
+  },
 })
 
-const emit = defineEmits(['updateTheme'])
+const emit = defineEmits(["updateTheme"])
 const showCollapsed = ref(false)
 
 const getRoute = computed(() => {
@@ -20,12 +20,13 @@ const getRoute = computed(() => {
 })
 
 const toggleClass = (theme: string) => {
-  emit('updateTheme', theme)
+  emit("updateTheme", theme)
 }
 </script>
 
 <template>
   <div
+    v-if="getRoute.query['background'] !== 'false'"
     class="flex flex-row flex-row-reverse top-4 right-4 left-4 absolute justify-between md:(flex-col justify-end space-y-4) "
   >
     <!-- Background options -->
@@ -57,7 +58,12 @@ const toggleClass = (theme: string) => {
         <div
           v-for="background in backgrounds"
           class="bg-gradient-to-tl rounded-full cursor-pointer h-6 transition-all w-6"
-          :class="[background, background === currentBg ? 'ring-2 ring-white/50 opacity-100' : 'opacity-50 hover:opacity-100']"
+          :class="[
+            background,
+            background === currentBg
+              ? 'ring-2 ring-white/50 opacity-100'
+              : 'opacity-50 hover:opacity-100',
+          ]"
           @click="toggleClass(background)"
         />
       </div>
@@ -65,7 +71,10 @@ const toggleClass = (theme: string) => {
 
     <!-- Go back -->
     <div v-if="getRoute.path !== '/'">
-      <button class="control-button" @click="$router.push({ path: '/', query: getRoute.query })">
+      <button
+        class="control-button"
+        @click="$router.push({ path: '/', query: getRoute.query })"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6"
