@@ -21,15 +21,14 @@ const getOptions = computed(() => {
   }
 })
 
-const background = ref(backgrounds[Math.floor(Math.random() * backgrounds.length)])
-
-console.log(background, backgrounds)
+const background = ref(
+  backgrounds[Math.floor(Math.random() * backgrounds.length)]
+)
 
 const toggleTheme = (theme: string) => {
-  background.value = theme;
+  background.value = theme
 }
 </script>
-
 
 <template>
   <Options :currentBg="background" @updateTheme="toggleTheme" />
