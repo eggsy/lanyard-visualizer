@@ -1,50 +1,49 @@
-
 <script lang="ts" setup>
-import { onStartTyping, useTitle } from "@vueuse/core";
-import { useRoute } from "vue-router";
-import { computed, ref } from "vue";
+import { onStartTyping, useTitle } from "@vueuse/core"
+import { useRoute } from "vue-router"
+import { computed, ref } from "vue"
 
 // Types
 import type { Ref } from "vue"
 
 // Components
-import Card from "../components/Card.vue";
+import Card from "../components/Card.vue"
 
 // References
-const userId = ref("");
-const input: Ref<HTMLInputElement | null> = ref(null);
+const userId = ref("")
+const input: Ref<HTMLInputElement | null> = ref(null)
 
 // Get query from the route
 const { query } = useRoute()
 
 // Computed methods
 const getTarget = computed(() => {
-  if (userId.value !== '') {
+  if (userId.value !== "") {
     return {
       query,
-      name: 'User',
+      name: "User",
       params: {
-        id: userId.value
+        id: userId.value,
       },
     }
-  }
-  else return { name: 'Home', query }
+  } else return { name: "Home", query }
 })
 
 // Hooks
 useTitle("Lanyard Visualizer")
 
 onStartTyping(() => {
-  input?.value?.focus();
-});
+  input?.value?.focus()
+})
 </script>
-
 
 <template>
   <div class="grid gap-12 items-center md:grid-cols-2">
     <div class="flex flex-col space-y-4 text-center md:text-left">
       <div>
-        <h1 class="font-bold text-shadow-md text-white text-2xl md:text-4xl">Lanyard Visualizer</h1>
+        <h1 class="font-bold text-shadow-md text-white text-2xl md:text-4xl">
+          Lanyard Visualizer
+        </h1>
 
         <p class="text-shadow-sm md:w-4/5">
           <a
@@ -53,7 +52,8 @@ onStartTyping(() => {
             target="_blank"
             rel="noreferrer"
             class="underline"
-          >Lanyard</a>
+            >Lanyard</a
+          >
           visualizer example built with Vue, Vite, TypeScript and Windi CSS
         </p>
       </div>
@@ -62,13 +62,15 @@ onStartTyping(() => {
         <input
           ref="input"
           v-model="userId"
-          placeholder="Enter user ID..."
-          class="rounded-lg outline-none bg-opacity-30 bg-gray-200 py-2 px-4 placeholder-gray-100 transition-all text-gray-100 appearence-none md:w-3/4 hover:(shadow-lg) focus:(shadow-lg)"
+          placeholder="Enter Discord user ID..."
+          class="rounded-lg outline-none bg-opacity-30 bg-gray-200 py-2 px-4 placeholder-gray-100 transition-all ring-gray-600/30 text-gray-100 appearence-none md:w-3/4 focus:(ring-2)"
           autocomplete="on"
           type="text"
         />
 
-        <router-link :to="getTarget" class="text-center btn md:w-max">Submit</router-link>
+        <router-link :to="getTarget" class="text-center btn md:w-max"
+          >Submit</router-link
+        >
       </div>
     </div>
 
