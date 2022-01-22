@@ -13,7 +13,7 @@ A service to see your Discord status online easy and for free with the help of t
 - Every RPCs work!
   - If there's something visible on your status (only RPCs), it's visible here too!
 - Customization, use it as iframe, remove footer or title bar!
-  - You can use simple queries like `?mode=iframe&title=false&footer=false` to customize the look of it! This way, you can iframe it to your website and remove the parts that you don't need!
+  - You can use simple queries like `?background=false&title=false` to customize the look of it! This way, you can iframe it to your website and remove the parts that you don't need!
 - Everything is real-time!
   - We use Lanyard's WebSocket so everything is updated in real-time!
 
@@ -41,6 +41,6 @@ Starting in development mode will provide hot reloading, PRs and issues are alwa
 These are the technologies I used to create this website! This was my first time trying out Vue 3 (together with TypeScript, Vite, VueUse and Windi CSS) for an actual project and I'm obsessed with it now!
 
 - [Lanyard API](https://github.com/phineas/lanyard) by [@phineas](https://github.com/phineas)
-- [Vue 3](https://vuejs.org) by [@yyx990803](https://github.com/yyx990803)
+- [Vue 3](https://vuejs.org)
 - [Windi CSS](https://windicss.org)
 - [VueUse](https://vueuse.org/)
