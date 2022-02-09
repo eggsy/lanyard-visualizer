@@ -157,7 +157,7 @@ const getTime = computed(() => {
         />
       </div>
 
-      <div class="space-y-px overflow-x-hidden truncate">
+      <div class="space-y-px">
         <a
           v-if="isSpotify && trackId"
           :href="`https://open.spotify.com/track/${trackId}`"
