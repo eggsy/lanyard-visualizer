@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onStartTyping, useTitle } from "@vueuse/core"
-import { useRoute } from "vue-router"
+import { useRoute, useRouter } from "vue-router"
 import { computed, ref } from "vue"
 
 // Types
@@ -14,6 +14,7 @@ const userId = ref("")
 const input: Ref<HTMLInputElement | null> = ref(null)
 
 // Get query from the route
+const { push } = useRouter()
 const { query } = useRoute()
 
 // Computed methods
@@ -66,6 +67,7 @@ onStartTyping(() => {
           class="rounded-lg outline-none bg-opacity-30 bg-gray-200 py-2 px-4 placeholder-gray-100 transition-all ring-gray-600/30 text-gray-100 appearence-none md:w-3/4 focus:(ring-2)"
           autocomplete="on"
           type="text"
+          @keyup.enter="push(getTarget)"
         />
 
         <router-link :to="getTarget" class="text-center btn md:w-max"
