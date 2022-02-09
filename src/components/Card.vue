@@ -1,24 +1,24 @@
 <script lang="ts" setup>
-import { useParallax, useMouseInElement, useTimestamp } from '@vueuse/core'
-import { defineProps, ref, reactive, computed, watch } from "vue";
+import { useTimestamp } from "@vueuse/core"
+import { defineProps, ref, reactive, computed, watch } from "vue"
+import { useRoute } from "vue-router"
 
 // Components
 import Progress from "./Progress.vue"
 
 // Types
-import type { PropType, CSSProperties, ComputedRef } from "vue"
-import type { Timestamps } from "../types/lanyard";
+import type { PropType } from "vue"
+import type { Timestamps } from "../types/lanyard"
 
 // References
 const target = ref(null)
 
+// Options
+const { query } = useRoute()
+
 // Reactive objects
-const parallax = reactive(useParallax(target))
 const imageError = reactive({ large: false, small: false })
 const timestamp = useTimestamp()
-
-// Is mouse in element?
-const { isOutside } = useMouseInElement(target)
 
 // Props
 const props = defineProps({
@@ -45,38 +45,41 @@ const props = defineProps({
   smallImage: {
     type: String,
     required: false,
-    default: ""
+    default: "",
   },
   timestamps: {
     type: Object as PropType<Timestamps>,
     required: false,
-    default: () => { }
+    default: () => ({}),
   },
   isSpotify: {
     type: Boolean,
     required: false,
-    default: false
+    default: false,
   },
   trackId: {
     type: String,
     required: false,
-    default: ""
-  }
-});
+    default: "",
+  },
+})
 
 // Watchers
-watch(() => [props.largeImage, props.smallImage], () => {
-  if (imageError.large === true) imageError.large = false
-  if (imageError.small === true) imageError.small = false
-})
+watch(
+  () => [props.largeImage, props.smallImage],
+  () => {
+    if (imageError.large === true) imageError.large = false
+    if (imageError.small === true) imageError.small = false
+  }
+)
 
 // Computed methods
 const getImageUrl = computed(() => {
   const object = {
     largeImage: "https://i.imgur.com/j1HAfFJ.png",
-    smallImage: null
+    smallImage: null,
   } as {
-    largeImage: string,
+    largeImage: string
     smallImage: string | null
   }
 
@@ -87,49 +90,40 @@ const getImageUrl = computed(() => {
 })
 
 const getTime = computed(() => {
-  if (props.isSpotify) return;
+  if (props.isSpotify) return
 
   const { start, end } = props.timestamps || {}
   const currentTime = timestamp.value
 
-  const mapFunction = (time: number) => `0${time}`.slice(-2);
+  const mapFunction = (time: number) => `0${time}`.slice(-2)
 
-  if (!start && !end) return;
+  if (!start && !end) return
   else if (start && !end) {
-    const timeElapsed = Math.abs(currentTime - start) / 1000;
+    const timeElapsed = Math.abs(currentTime - start) / 1000
 
     const timeElapsedArray = [
       Math.floor(timeElapsed / 3600) % 24,
       Math.floor(timeElapsed / 60) % 60,
       Math.floor(timeElapsed % 60),
-    ];
+    ]
 
     // Remove hours if it's not been an hour
     if (String(timeElapsedArray[0]) === "0") timeElapsedArray.shift()
 
     return `${timeElapsedArray.map(mapFunction).join(":")} elapsed`
   } else if (end) {
-    const timeLeft = Math.abs(end - timestamp.value) / 1000;
+    const timeLeft = Math.abs(end - timestamp.value) / 1000
 
     const timeLeftArray = [
       Math.floor(timeLeft / 3600) % 24,
       Math.floor(timeLeft / 60) % 60,
       Math.floor(timeLeft % 60),
-    ];
+    ]
 
     // Remove hours if it's not been an hour
     if (String(timeLeftArray[0]) === "0") timeLeftArray.shift()
 
     return `${timeLeftArray.map(mapFunction).join(":")} left`
-  }
-})
-
-const continerStyles: ComputedRef<CSSProperties> = computed(() => {
-  return {
-    transition: "transform .1s",
-    transform:
-      isOutside?.value === true ?
-        'rotateX(0) rotateY(0' : `rotateX(${parallax.roll * 20}deg) rotateY(${parallax.tilt * 20}deg)`,
   }
 })
 </script>
@@ -138,7 +132,6 @@ const continerStyles: ComputedRef<CSSProperties> = computed(() => {
   <div
     ref="target"
     class="rounded-lg flex flex-col space-y-4 bg-white/10 p-4 overflow-x-hidden"
-    :style="continerStyles"
   >
     <div class="flex space-x-4 items-center">
       <div class="flex-shrink-0 relative">
@@ -172,25 +165,30 @@ const continerStyles: ComputedRef<CSSProperties> = computed(() => {
           rel="noreferrer"
           title="Open on Spotify"
           class="cursor-pointer font-semibold text-lg leading-tight truncate hover:underline"
-        >{{ name }}</a>
+          >{{ name }}</a
+        >
 
-        <h1 v-else class="font-semibold text-lg leading-tight truncate">{{ name }}</h1>
+        <h1 v-else class="font-semibold text-lg leading-tight truncate">
+          {{ name }}
+        </h1>
 
-        <h2
-          v-if="details"
-          class="leading-tight opacity-90 line-clamp-2"
-        >{{ isSpotify ? "by" : "" }} {{ details }}</h2>
+        <h2 v-if="details" class="leading-tight opacity-90 line-clamp-2">
+          {{ isSpotify ? "by" : "" }} {{ details }}
+        </h2>
 
-        <h2
-          v-if="state"
-          class="leading-tight opacity-90 line-clamp-2"
-        >{{ isSpotify ? "on" : "" }} {{ state }}</h2>
+        <h2 v-if="state" class="leading-tight opacity-90 line-clamp-2">
+          {{ isSpotify ? "on" : "" }} {{ state }}
+        </h2>
 
-        <span v-if="!isSpotify && getTime" class="leading-tight opacity-90 truncate">{{ getTime }}</span>
+        <span
+          v-if="!isSpotify && getTime"
+          class="leading-tight opacity-90 truncate"
+          >{{ getTime }}</span
+        >
       </div>
     </div>
 
-    <div v-if="isSpotify && timestamps">
+    <div v-if="isSpotify && timestamps && query.progress !== 'false'">
       <Progress :start="timestamps?.start" :end="timestamps?.end" />
     </div>
   </div>
