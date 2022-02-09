@@ -211,6 +211,7 @@ else {
       class="flex flex-col mx-auto space-y-4 w-full"
       :class="mode !== 'iframe' && 'md:w-5/12 2xl:w-3/12'"
     >
+      <!-- Title -->
       <div v-if="title === true" class="flex items-center justify-between">
         <div class="flex space-x-2 items-center">
           <div class="flex-shrink-0">
@@ -246,6 +247,7 @@ else {
         >
       </div>
 
+      <!-- Card -->
       <div>
         <Card
           v-if="
