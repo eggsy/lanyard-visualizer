@@ -34,10 +34,19 @@ const toggleTheme = (theme: string) => {
   <Options :currentBg="background" @updateTheme="toggleTheme" />
 
   <div
-    class="bg-gradient-to-tl flex min-h-screen text-white px-4 items-center justify-center"
-    :class="getOptions.background === true ? background : 'bg-black'"
+    class="bg-gradient-to-tl flex min-h-screen text-white items-center justify-center"
+    :class="{
+      'bg-black': getOptions.background === false,
+      [background]: getOptions.background === true,
+
+      'px-4': getOptions.mode !== 'iframe',
+    }"
   >
-    <div class="container mx-auto">
+    <div
+      :class="
+        getOptions.mode !== 'iframe' ? 'container mx-auto' : 'w-screen h-screen'
+      "
+    >
       <router-view v-slot="{ Component }">
         <transition name="fade" mode="out-in">
           <component :is="Component" />
