@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useTimestamp } from "@vueuse/core"
-import { defineProps, ref, reactive, computed, watch } from "vue"
+import { ref, reactive, computed, watch } from "vue"
 import { useRoute } from "vue-router"
 
 // Components

@@ -1,19 +1,18 @@
-
 <script lang="ts" setup>
 import { useTimestamp } from "@vueuse/core"
-import { computed, defineProps } from "vue"
+import { computed } from "vue"
 
 const props = defineProps({
   start: {
     type: Number,
     required: true,
-    default: 0
+    default: 0,
   },
   end: {
     type: Number,
     required: true,
-    default: 0
-  }
+    default: 0,
+  },
 })
 
 // Use a reference to generate reactive time.
@@ -26,7 +25,7 @@ const getTimeElapsed = computed(() => {
 
   const timeElapsedArray = [
     Math.round((timeElapsed / (1000 * 60)) % 60),
-    Math.round((timeElapsed / 1000) % 60)
+    Math.round((timeElapsed / 1000) % 60),
   ]
 
   const mapFunction = (time: number) => `0${time}`.slice(-2)
@@ -39,7 +38,7 @@ const getTimeLeft = computed(() => {
 
   const timeLeftArray = [
     Math.round((timeLeft / (1000 * 60)) % 60),
-    Math.round((timeLeft / 1000) % 60)
+    Math.round((timeLeft / 1000) % 60),
   ]
 
   const mapFunction = (time: number) => `0${time}`.slice(-2)
@@ -52,18 +51,21 @@ const getStyles = computed(() => {
 
   if (progress > 100)
     return {
-      width: "100%"
+      width: "100%",
     }
   else
     return {
-      width: `${progress.toFixed(2)}%`
+      width: `${progress.toFixed(2)}%`,
     }
 })
 </script>
 
 <template>
   <div class="rounded-lg bg-gray-200/20 h-2">
-    <div class="rounded-lg bg-white/75 h-2 transition-all" :style="getStyles"></div>
+    <div
+      class="rounded-lg bg-white/75 h-2 transition-all"
+      :style="getStyles"
+    ></div>
   </div>
 
   <div class="flex items-center justify-between">
