@@ -36,11 +36,10 @@ I don't collect any kind of data, there's no third-party plugins (except the Goo
 
 Starting in development mode will provide hot reloading, PRs and issues are always welcome! Feel free to contribute to my project.
 
-## 🙏 Thanks
+## Sponsors
 
-These are the technologies I used to create this website! This was my first time trying out Vue 3 (together with TypeScript, Vite, VueUse and Windi CSS) for an actual project and I'm obsessed with it now!
-
-- [Lanyard API](https://github.com/phineas/lanyard) by [@phineas](https://github.com/phineas)
-- [Vue 3](https://vuejs.org)
-- [Windi CSS](https://windicss.org)
-- [VueUse](https://vueuse.org/)
+<p align="center">
+  <a href="https://github.com/sponsors/eggsy">
+    <img src='https://cdn.jsdelivr.net/gh/eggsy/.github/sponsors.svg'/>
+  </a>
+</p>
