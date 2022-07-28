@@ -6,7 +6,7 @@
 
 A service to see your Discord status online easy and for free with the help of the [Lanyard API](https://github.com/phineas/lanyard)! **To use this service, you have to be in Lanyard's Discord server so that it could monitor you, you can find the invite link in [Lanyard's GitHub repository](https://github.com/phineas/lanyard).**
 
-## 🔥 Features
+### 🔥 Features
 
 - Spotify integration
   - It will display what you're listening, it'll show a progress bar just like the one on your Discord profile!
@@ -17,11 +17,11 @@ A service to see your Discord status online easy and for free with the help of t
 - Everything is real-time!
   - We use Lanyard's WebSocket so everything is updated in real-time!
 
-## ❓ How to use?
+### ❓ How to use?
 
 Just visit [this page](https://lanyard-visualizer.netlify.app) and use the input to check on whoever you want! _Keep in mind that the user has to be in Lanyard's Discord server so that they could be monitored by the service._
 
-## 🌟 Host it yourself
+### 🌟 Host it yourself
 
 I don't collect any kind of data, there's no third-party plugins (except the Google Fonts), no cookies, nothing! If you still don't want to use the service, you can download from the source and host it yourself.
 
@@ -36,7 +36,7 @@ I don't collect any kind of data, there's no third-party plugins (except the Goo
 
 Starting in development mode will provide hot reloading, PRs and issues are always welcome! Feel free to contribute to my project.
 
-## Sponsors
+### Sponsors
 
 <p align="center">
   <a href="https://github.com/sponsors/eggsy">
