@@ -200,7 +200,7 @@ else {
 
     <div
       v-else
-      class="flex flex-col justify-center w-full mx-auto h-screen space-y-4 md:w-4/12 2xl:w-3/12"
+      class="flex flex-col justify-center w-full mx-auto px-8 md:px-0 h-screen space-y-4 md:w-4/12 2xl:w-3/12"
     >
       <div
         class="absolute -z-1 overflow-hidden pointer-events-none inset-0 grid place-items-center"

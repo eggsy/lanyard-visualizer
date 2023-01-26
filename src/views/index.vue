@@ -28,7 +28,7 @@ onStartTyping(() => {
 
 <template>
   <div>
-    <header class="h-screen relative grid place-items-center p-16">
+    <header class="h-screen relative grid place-items-center p-8 md:p-16">
       <div
         class="absolute -z-1 overflow-hidden pointer-events-none inset-0 grid place-items-center"
       >
@@ -43,18 +43,18 @@ onStartTyping(() => {
         <img src="/logo.png" alt="Lanyard logo" class="w-24 h-24" />
 
         <h1
-          class="text-7xl font-bold bg-gradient-to-tl from-gray-50 via-gray-100 to-gray-200 bg-clip-text text-transparent text-center"
+          class="text-5xl md:text-7xl font-bold bg-gradient-to-tl from-gray-50 via-gray-100 to-gray-200 bg-clip-text text-transparent text-center"
         >
           <span class="block">Lanyard</span>
           <span class="block">Visualizer</span>
         </h1>
 
-        <p class="text-white/50 text-lg md:w-2/3 text-center font-medium">
+        <p class="text-white/50 md:text-lg md:w-2/3 text-center font-medium">
           A proof-of-concept example to show what you can build with Lanyard
           API.
         </p>
 
-        <div class="relative w-1/2 flex justify-center">
+        <div class="relative w-full md:w-1/2 flex justify-center">
           <input
             v-model="userId"
             ref="inputElement"
@@ -77,7 +77,7 @@ onStartTyping(() => {
           </div>
         </div>
 
-        <div class="flex space-x-4 text-white/50">
+        <div class="flex space-x-4 text-xl md:text-base text-white/50">
           <a
             href="https://github.com/eggsy/lanyard-visualizer"
             target="_blank"
