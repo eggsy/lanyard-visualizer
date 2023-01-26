@@ -4,7 +4,7 @@
   <img src="./images/landing.png" alt="landing page" title="Landing page of the example" />
 </p>
 
-A service to see your Discord status online easy and for free with the help of the [Lanyard API](https://github.com/phineas/lanyard)! **To use this service, you have to be in Lanyard's Discord server so that it could monitor you, you can find the invite link in [Lanyard's GitHub repository](https://github.com/phineas/lanyard).**
+An interactive example of how you could use [Lanyard API](https://github.com/Phineas/lanyard) to create amazing real-time Discord status related things! Take a look at the code and see how it works!
 
 ### 🔥 Features
 
@@ -12,14 +12,12 @@ A service to see your Discord status online easy and for free with the help of t
   - It will display what you're listening, it'll show a progress bar just like the one on your Discord profile!
 - Every RPCs work!
   - If there's something visible on your status (only RPCs), it's visible here too!
-- Customization, use it as iframe, remove footer or title bar!
-  - You can use simple queries like `?background=false&title=false` to customize the look of it! This way, you can even iframe it to your website or your stream setting the `mode` query to `iframe`!
 - Everything is real-time!
   - We use Lanyard's WebSocket so everything is updated in real-time!
 
 ### ❓ How to use?
 
-Just visit [this page](https://lanyard-visualizer.netlify.app) and use the input to check on whoever you want! _Keep in mind that the user has to be in Lanyard's Discord server so that they could be monitored by the service._
+Just visit [this page](https://lanyard.eggsy.app) and use the input to check on whoever you want! _Keep in mind that the user has to be in Lanyard's Discord server so that they could be monitored by the service._
 
 ### 🌟 Host it yourself
 
