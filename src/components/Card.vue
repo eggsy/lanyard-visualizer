@@ -131,7 +131,7 @@ const getTime = computed(() => {
 <template>
   <div
     ref="target"
-    class="rounded-lg flex flex-col space-y-4 bg-white/10 p-4 overflow-x-hidden"
+    class="rounded-lg flex flex-col space-y-4 backdrop-blur-md bg-white/5 p-4 overflow-x-hidden"
   >
     <div class="flex space-x-4 items-center">
       <div class="flex-shrink-0 relative">
