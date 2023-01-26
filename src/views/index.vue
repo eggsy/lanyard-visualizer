@@ -1,86 +1,114 @@
 <script lang="ts" setup>
 import { onStartTyping, useTitle } from "@vueuse/core"
-import { useRoute, useRouter } from "vue-router"
-import { computed, ref } from "vue"
+import { ref } from "vue"
+import { useRouter } from "vue-router"
 
-// Types
-import type { Ref } from "vue"
+// Icons
+import IconGithub from "~icons/tabler/brand-github"
+import IconLink from "~icons/tabler/link"
 
-// Components
-import Card from "../components/Card.vue"
+const router = useRouter()
 
-// References
 const userId = ref("")
-const input: Ref<HTMLInputElement | null> = ref(null)
+const inputFocused = ref(false)
+const inputElement = ref<HTMLInputElement | null>(null)
 
-// Get query from the route
-const { push } = useRouter()
-const { query } = useRoute()
-
-// Computed methods
-const getTarget = computed(() => {
-  if (userId.value !== "") {
-    return {
-      query,
-      name: "User",
-      params: {
-        id: userId.value,
-      },
-    }
-  } else return { name: "Home", query }
-})
+const handleSubmit = async () => {
+  if (!userId.value) return
+  router.push(`/${userId.value}`)
+}
 
 // Hooks
 useTitle("Lanyard Visualizer")
 
 onStartTyping(() => {
-  input?.value?.focus()
+  inputElement?.value?.focus()
 })
 </script>
 
 <template>
-  <div class="grid gap-12 items-center md:grid-cols-2">
-    <div class="flex flex-col space-y-4 text-center md:text-left">
-      <div>
-        <h1 class="font-bold text-shadow-md text-white text-2xl md:text-4xl">
-          Lanyard Visualizer
+  <div>
+    <header class="h-screen relative grid place-items-center p-16">
+      <div
+        class="absolute -z-1 overflow-hidden pointer-events-none inset-0 grid place-items-center"
+      >
+        <img
+          src="/header-background.png"
+          alt="Stylistic header background"
+          class="object-cover h-full w-full max-w-screen max-h-screen opacity-10"
+        />
+      </div>
+
+      <div class="flex flex-col items-center gap-6">
+        <img src="/logo.png" alt="Lanyard logo" class="w-24 h-24" />
+
+        <h1
+          class="text-7xl font-bold bg-gradient-to-tl from-gray-50 via-gray-100 to-gray-200 bg-clip-text text-transparent text-center"
+        >
+          <span class="block">Lanyard</span>
+          <span class="block">Visualizer</span>
         </h1>
 
-        <p class="text-shadow-sm md:w-4/5">
-          <a
-            href="https://lanyard.rest/discord"
-            title="Join Discord"
-            target="_blank"
-            rel="noreferrer"
-            class="underline"
-            >Lanyard</a
-          >
-          visualizer example built with Vue, Vite, TypeScript and Windi CSS
+        <p class="text-white/50 text-lg md:w-2/3 text-center font-medium">
+          A proof-of-concept example to show what you can build with Lanyard
+          API.
         </p>
+
+        <div class="relative w-1/2 flex justify-center">
+          <input
+            v-model="userId"
+            ref="inputElement"
+            type="number"
+            class="appearance-none pl-3 pr-20 placeholder-white/20 w-full bg-transparent outline-none py-2 border-[1.5px] border-white/10 hover:border-white/20 focus:border-white/30 transition-all rounded-lg"
+            placeholder="Enter your Discord user ID"
+            @focus="inputFocused = true"
+            @blur="inputFocused = false"
+            @keydown.enter="handleSubmit"
+          />
+
+          <div class="absolute inset-y-0 right-0 pr-4 flex items-center">
+            <button
+              type="button"
+              class="text-white/20 font-medium select-none hover:text-white/40 transition-colors text-xs uppercase"
+              :class="userId.length >= 18 && 'text-white/40'"
+              @click="handleSubmit"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+
+        <div class="flex space-x-4 text-white/50">
+          <a
+            href="https://github.com/eggsy/lanyard-visualizer"
+            target="_blank"
+            title="Visit GitHub repository"
+          >
+            <IconGithub class="hover:text-white transition-colors" />
+          </a>
+
+          <a
+            href="https://eggsy.xyz"
+            target="_blank"
+            title="Visit developer's website"
+          >
+            <IconLink class="hover:text-white transition-colors" />
+          </a>
+        </div>
       </div>
-
-      <div class="flex flex-col space-y-2">
-        <input
-          ref="input"
-          v-model="userId"
-          placeholder="Enter Discord user ID..."
-          class="rounded-lg outline-none bg-opacity-30 bg-gray-200 py-2 px-4 placeholder-gray-100 transition-all ring-gray-600/30 text-gray-100 appearence-none md:w-3/4 focus:(ring-2)"
-          autocomplete="on"
-          type="text"
-          @keyup.enter="push(getTarget)"
-        />
-
-        <router-link :to="getTarget" class="text-center btn md:w-max"
-          >Submit</router-link
-        >
-      </div>
-    </div>
-
-    <Card
-      name="Lanyard Visualizer"
-      details="by EGGSY"
-      state="on GitHub, open-source"
-      :timestamps="{ start: new Date().getTime() }"
-    />
+    </header>
   </div>
 </template>
+
+<style lang="scss">
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+</style>
