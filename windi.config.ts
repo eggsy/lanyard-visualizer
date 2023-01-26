@@ -19,7 +19,7 @@ export default defineConfig({
     exclude: ["node_modules", ".git"],
   },
   shortcuts: {
-    btn: "bg-gray-100 bg-opacity-10 hover:bg-opacity-25 transition px-4 py-2 rounded-lg text-white",
+    btn: "bg-white/5 hover:bg-white/10 text-white/30 hover:text-white/50 select-none transition px-4 py-2 text-sm rounded-lg",
   },
   plugins: [LineClamp],
 })
