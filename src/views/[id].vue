@@ -3,6 +3,9 @@ import { useWebSocket, useTitle, useFavicon } from "@vueuse/core"
 import { computed, ref, reactive, watch } from "vue"
 import { onBeforeRouteLeave, useRoute } from "vue-router"
 
+// Icons
+import IconBack from "~icons/tabler/arrow-left"
+
 // Components
 import Card from "../components/Card.vue"
 
@@ -103,8 +106,6 @@ watch(
   (newValue, oldValue) => {
     if (newValue?.username !== oldValue?.username)
       useTitle(`${newValue.username}'s Status - Lanyard Visualizer`)
-    if (newValue?.avatar !== oldValue?.avatar)
-      useFavicon(newValue.avatar || "/favicon.ico")
   }
 )
 
@@ -192,7 +193,8 @@ else {
         }"
         class="btn w-max mx-auto"
       >
-        Go back home
+        <IconBack />
+        <span>Go back home</span>
       </RouterLink>
     </div>
 
@@ -200,6 +202,16 @@ else {
       v-else
       class="flex flex-col justify-center w-full mx-auto h-screen space-y-4 md:w-4/12 2xl:w-3/12"
     >
+      <div
+        class="absolute -z-1 overflow-hidden pointer-events-none inset-0 grid place-items-center"
+      >
+        <img
+          src="/header-background.png"
+          alt="Stylistic header background"
+          class="object-cover h-full w-full max-w-screen max-h-screen opacity-10"
+        />
+      </div>
+
       <!-- Title -->
       <div class="flex items-center justify-between">
         <div class="flex space-x-2 items-center">
@@ -266,9 +278,10 @@ else {
           query: route.query,
           name: 'Home',
         }"
-        class="btn w-max mx-auto"
+        class="btn w-max bg-transparent mx-auto"
       >
-        Go back home
+        <IconBack />
+        <span>Go back home</span>
       </RouterLink>
     </div>
   </Transition>
