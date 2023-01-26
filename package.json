@@ -15,17 +15,19 @@
   },
   "dependencies": {
     "@vueuse/core": "^9.11.1",
-    "@vueuse/motion": "2.0.0-beta.12",
+    "@vueuse/motion": "2.0.0-beta.17",
     "vue": "^3.2.45",
     "vue-router": "4.1.6"
   },
   "devDependencies": {
     "@iconify-json/tabler": "^1.1.56",
     "@types/node": "^18.11.18",
+    "@types/web-bluetooth": "^0.0.16",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/compiler-sfc": "^3.2.45",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.2",
+    "defu": "^6.1.2",
     "eslint": "^8.32.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "^9.9.0",

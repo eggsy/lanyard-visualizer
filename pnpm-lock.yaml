@@ -3,12 +3,14 @@ lockfileVersion: 5.4
 specifiers:
   '@iconify-json/tabler': ^1.1.56
   '@types/node': ^18.11.18
+  '@types/web-bluetooth': ^0.0.16
   '@vitejs/plugin-vue': ^4.0.0
   '@vue/compiler-sfc': ^3.2.45
   '@vue/eslint-config-prettier': ^7.0.0
   '@vue/eslint-config-typescript': ^11.0.2
   '@vueuse/core': ^9.11.1
-  '@vueuse/motion': 2.0.0-beta.12
+  '@vueuse/motion': 2.0.0-beta.17
+  defu: ^6.1.2
   eslint: ^8.32.0
   eslint-plugin-prettier: ^4.2.1
   eslint-plugin-vue: ^9.9.0
@@ -24,17 +26,19 @@ specifiers:
 
 dependencies:
   '@vueuse/core': 9.11.1_vue@3.2.45
-  '@vueuse/motion': 2.0.0-beta.12_vue@3.2.45
+  '@vueuse/motion': 2.0.0-beta.17_vue@3.2.45
   vue: 3.2.45
   vue-router: 4.1.6_vue@3.2.45
 
 devDependencies:
   '@iconify-json/tabler': 1.1.56
   '@types/node': 18.11.18
+  '@types/web-bluetooth': 0.0.16
   '@vitejs/plugin-vue': 4.0.0_vite@4.0.4+vue@3.2.45
   '@vue/compiler-sfc': 3.2.45
   '@vue/eslint-config-prettier': 7.0.0_eslint@8.32.0
   '@vue/eslint-config-typescript': 11.0.2_5gm7ezxcdo2zu65gboxarjsumy
+  defu: 6.1.2
   eslint: 8.32.0
   eslint-plugin-prettier: 4.2.1_eslint@8.32.0
   eslint-plugin-vue: 9.9.0_eslint@8.32.0
@@ -383,7 +387,6 @@ packages:
 
   /@types/web-bluetooth/0.0.16:
     resolution: {integrity: sha512-oh8q2Zc32S6gd/j50GowEjKLoOVOwHP/bWVjKJInBwQqdOYMdPrf1oVlelTlyfFK3CKxL1uahMDAr+vy8T7yMQ==}
-    dev: false
 
   /@typescript-eslint/eslint-plugin/5.49.0_iu322prlnwsygkcra5kbpy22si:
     resolution: {integrity: sha512-IhxabIpcf++TBaBa1h7jtOWyon80SXPRLDq0dVz5SLFC/eW6tofkw/O7Ar3lkx5z5U6wzbKDrl2larprp5kk5Q==}
@@ -711,9 +714,10 @@ packages:
     resolution: {integrity: sha512-ABjkrG+VXggNhjfGyw5e/sekxTZfXTwjrYXkkWQmQ7Biyv+Gq9UD6IDNfeGvQZEINI0Qzw6nfuO2UFCd3hlrxQ==}
     dev: false
 
-  /@vueuse/motion/2.0.0-beta.12_vue@3.2.45:
-    resolution: {integrity: sha512-cAZqXexLX6xo+H1N1Mv+wBSSqG4wB+BdjIuHQ50jwlelXCDxSi8gj0K/9nDS+aUZtWh6YMwS6UGCKg58jMVglA==}
+  /@vueuse/motion/2.0.0-beta.17_vue@3.2.45:
+    resolution: {integrity: sha512-qOBM4VHIjPtWVieYAO8+lShG9ji1Wk4JJlphwrbvSK11ep93J3SJyWqARb1oxoBNqx7Zk8d0j8/lKxgKRkpuGA==}
     peerDependencies:
+      '@nuxt/kit': npm:@nuxt/kit-edge@latest
       '@vue/composition-api': ^1.4.1
       vue: ^2.0.0 || >=3.0.0-rc.0
     peerDependenciesMeta:
@@ -722,6 +726,7 @@ packages:
     dependencies:
       '@vueuse/core': 8.9.4_vue@3.2.45
       '@vueuse/shared': 8.9.4_vue@3.2.45
+      csstype: 3.1.1
       framesync: 6.1.2
       popmotion: 11.0.5
       style-value-types: 5.1.2
@@ -923,6 +928,10 @@ packages:
   /csstype/2.6.21:
     resolution: {integrity: sha512-Z1PhmomIfypOpoMjRQB70jfvy/wxT50qW08YXO5lMIJkrdq4yOTR+AW7FqutScmB9NkLwxo+jU+kZLbofZZq/w==}
 
+  /csstype/3.1.1:
+    resolution: {integrity: sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==}
+    dev: false
+
   /de-indent/1.0.2:
     resolution: {integrity: sha512-e/1zu3xH5MQryN2zdVaF0OrdNLUbvWxzMbi+iNA6Bky7l1RoP8a2fIbRocyHclXt/arDrrR6lL3TqFD9pMQTsg==}
     dev: true
@@ -941,6 +950,10 @@ packages:
 
   /deep-is/0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
+    dev: true
+
+  /defu/6.1.2:
+    resolution: {integrity: sha512-+uO4+qr7msjNNWKYPHqN/3+Dx3NFkmIzayk2L1MyZQlvgZb/J1A0fo410dpKrN2SnqFjt8n4JL8fDJE0wIgjFQ==}
     dev: true
 
   /dir-glob/3.0.1:
