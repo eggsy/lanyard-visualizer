@@ -4,6 +4,8 @@
   <img src="./images/landing.png" alt="landing page" title="Landing page of the example" />
 </p>
 
+> ⚠️ **BREAKING CHANGE**: From now on, this project won't be supporting settings to use as iframe. I updated the UI and removed many things that I believe weren't needed. If you are looking for something to put on your website, try [lanyard-profile-readme](https://github.com/cnrad/lanyard-profile-readme) by cnrad.
+
 An interactive example of how you could use [Lanyard API](https://github.com/Phineas/lanyard) to create amazing real-time Discord status related things! Take a look at the code and see how it works!
 
 ### 🔥 Features
