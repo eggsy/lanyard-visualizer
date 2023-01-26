@@ -58,7 +58,6 @@ onStartTyping(() => {
           <input
             v-model="userId"
             ref="inputElement"
-            type="number"
             class="appearance-none pl-3 pr-20 placeholder-white/20 w-full bg-transparent outline-none py-2 border-[1.5px] border-white/10 hover:border-white/20 focus:border-white/30 transition-all rounded-lg"
             placeholder="Enter your Discord user ID"
             @focus="inputFocused = true"
