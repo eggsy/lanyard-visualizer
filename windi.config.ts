@@ -4,11 +4,7 @@ import { resolve } from "path"
 import LineClamp from "windicss/plugin/line-clamp"
 import defaultTheme from "windicss/defaultTheme"
 
-// Import backgrounds
-import backgrounds from "./src/data/backgrounds"
-
 export default defineConfig({
-  safelist: [...backgrounds],
   theme: {
     fontFamily: {
       sans: ["Inter", ...defaultTheme.fontFamily.sans],
