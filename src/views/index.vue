@@ -30,6 +30,7 @@ onStartTyping(() => {
   <div>
     <header class="h-screen relative grid place-items-center p-8 md:p-16">
       <div
+        v-motion-fade
         class="absolute -z-1 overflow-hidden pointer-events-none inset-0 grid place-items-center"
       >
         <img
@@ -39,7 +40,7 @@ onStartTyping(() => {
         />
       </div>
 
-      <div class="flex flex-col items-center gap-6">
+      <div v-motion-fade :delay="300" class="flex flex-col items-center gap-6">
         <img src="/logo.png" alt="Lanyard logo" class="w-24 h-24" />
 
         <h1

@@ -203,6 +203,7 @@ else {
       class="flex flex-col justify-center w-full mx-auto px-8 md:px-0 h-screen space-y-4 md:w-4/12 2xl:w-3/12"
     >
       <div
+        v-motion-fade
         class="absolute -z-1 overflow-hidden pointer-events-none inset-0 grid place-items-center"
       >
         <img
@@ -213,7 +214,7 @@ else {
       </div>
 
       <!-- Title -->
-      <div class="flex items-center justify-between">
+      <div v-motion-fade :delay="300" class="flex items-center justify-between">
         <div class="flex space-x-2 items-center">
           <div class="flex-shrink-0">
             <img
@@ -249,21 +250,26 @@ else {
       </div>
 
       <!-- Card -->
-      <Card
+      <div
         v-if="
           Object.values(getPlayingStatus || {}).filter((item) => item)?.length >
           0
         "
-        :class="isConnecting && 'animate-pulse'"
-        :name="getPlayingStatus.name"
-        :largeImage="getPlayingStatus.largeImage || ''"
-        :smallImage="getPlayingStatus.smallImage || ''"
-        :state="getPlayingStatus.state"
-        :details="getPlayingStatus.details"
-        :timestamps="getPlayingStatus.timestamps"
-        :is-spotify="getPlayingStatus.spotify === true"
-        :track-id="getPlayingStatus.trackId"
-      />
+        v-motion-fade
+        :delay="300"
+      >
+        <Card
+          :class="isConnecting && 'animate-pulse'"
+          :name="getPlayingStatus.name"
+          :largeImage="getPlayingStatus.largeImage || ''"
+          :smallImage="getPlayingStatus.smallImage || ''"
+          :state="getPlayingStatus.state"
+          :details="getPlayingStatus.details"
+          :timestamps="getPlayingStatus.timestamps"
+          :is-spotify="getPlayingStatus.spotify === true"
+          :track-id="getPlayingStatus.trackId"
+        />
+      </div>
 
       <div v-else class="rounded-lg bg-white/5 text-white/30 text-sm p-4">
         {{
@@ -274,6 +280,8 @@ else {
       </div>
 
       <RouterLink
+        v-motion-fade
+        :delay="300"
         :to="{
           query: route.query,
           name: 'Home',
