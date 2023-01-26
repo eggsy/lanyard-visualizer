@@ -4,23 +4,14 @@ import { computed, ref, reactive, watch } from "vue"
 import { onBeforeRouteLeave, useRoute } from "vue-router"
 
 // Components
-import Card from "../../components/Card.vue"
+import Card from "../components/Card.vue"
 
 // Types
-import type { LanyardData } from "../../types/lanyard"
+import type { LanyardData } from "../types/lanyard"
 
-// References
+const route = useRoute()
 const socketLoaded = ref(false)
 const imageError = ref(false)
-
-// Composables
-const { params, query } = useRoute()
-
-// Reactive objects
-const { mode, title } = reactive({
-  mode: query.mode,
-  title: query.title || true,
-})
 
 const user = reactive({ error: false, data: {} }) as {
   error: boolean
@@ -118,7 +109,7 @@ watch(
 )
 
 // Connect to Lanyard socket when the app is mounted
-const userId = params.id
+const userId = route.params.id
 
 if (userId === null || userId?.length < 17) user.error = true
 else {
@@ -171,22 +162,22 @@ else {
 </script>
 
 <template>
-  <transition name="fade" mode="out-in">
+  <Transition name="fade" mode="out-in">
     <div
       v-if="user.error === true"
-      class="mx-auto space-y-4 text-center md:text-left md:w-2/4"
+      class="mx-auto space-y-4 h-screen flex flex-col justify-center text-center md:w-2/4"
     >
-      <h1 class="font-bold text-white text-shadow-md text-2xl">
-        Couldn't establish a WS connection to Lanyard API for this user
+      <h1 class="font-bold text-white text-shadow-md text-3xl">
+        Couldn't Establish a WS Connection
       </h1>
 
-      <p class="text-gray-100">
+      <p class="text-white/50 w-3/4 mx-auto">
         Make sure you entered a valid Discord user ID and make sure the user is
         in
         <a
           href="https://lanyard.rest/discord"
           title="Join Discord"
-          class="underline"
+          class="underline underline-dashed underline-white/20"
           rel="noreferrer"
           target="_blank"
           >Lanyard's Discord server</a
@@ -194,25 +185,23 @@ else {
         ID who is already in Discord.
       </p>
 
-      <div>
-        <router-link
-          :to="{
-            query,
-            name: 'Home',
-          }"
-          class="btn"
-          >Go back home</router-link
-        >
-      </div>
+      <RouterLink
+        :to="{
+          query: route.query,
+          name: 'Home',
+        }"
+        class="btn w-max mx-auto"
+      >
+        Go back home
+      </RouterLink>
     </div>
 
     <div
       v-else
-      class="flex flex-col mx-auto space-y-4 w-full"
-      :class="mode !== 'iframe' && 'md:w-5/12 2xl:w-3/12'"
+      class="flex flex-col justify-center w-full mx-auto h-screen space-y-4 md:w-4/12 2xl:w-3/12"
     >
       <!-- Title -->
-      <div v-if="title === true" class="flex items-center justify-between">
+      <div class="flex items-center justify-between">
         <div class="flex space-x-2 items-center">
           <div class="flex-shrink-0">
             <img
@@ -248,31 +237,39 @@ else {
       </div>
 
       <!-- Card -->
-      <div>
-        <Card
-          v-if="
-            Object.values(getPlayingStatus || {}).filter((item) => item)
-              ?.length > 0
-          "
-          :class="isConnecting && 'animate-pulse'"
-          :name="getPlayingStatus.name"
-          :largeImage="getPlayingStatus.largeImage || ''"
-          :smallImage="getPlayingStatus.smallImage || ''"
-          :state="getPlayingStatus.state"
-          :details="getPlayingStatus.details"
-          :timestamps="getPlayingStatus.timestamps"
-          :is-spotify="getPlayingStatus.spotify === true"
-          :track-id="getPlayingStatus.trackId"
-        />
+      <Card
+        v-if="
+          Object.values(getPlayingStatus || {}).filter((item) => item)?.length >
+          0
+        "
+        :class="isConnecting && 'animate-pulse'"
+        :name="getPlayingStatus.name"
+        :largeImage="getPlayingStatus.largeImage || ''"
+        :smallImage="getPlayingStatus.smallImage || ''"
+        :state="getPlayingStatus.state"
+        :details="getPlayingStatus.details"
+        :timestamps="getPlayingStatus.timestamps"
+        :is-spotify="getPlayingStatus.spotify === true"
+        :track-id="getPlayingStatus.trackId"
+      />
 
-        <div v-else class="rounded-lg bg-gray-100 bg-opacity-20 p-4">
-          {{
-            isConnecting
-              ? "Trying to establish a WS connection..."
-              : "User is not playing anything."
-          }}
-        </div>
+      <div v-else class="rounded-lg bg-white/5 text-white/30 text-sm p-4">
+        {{
+          isConnecting
+            ? "Trying to establish a WS connection..."
+            : "User is not playing anything."
+        }}
       </div>
+
+      <RouterLink
+        :to="{
+          query: route.query,
+          name: 'Home',
+        }"
+        class="btn w-max mx-auto"
+      >
+        Go back home
+      </RouterLink>
     </div>
-  </transition>
+  </Transition>
 </template>
