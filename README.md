@@ -19,7 +19,7 @@ An interactive example of how you could use [Lanyard API](https://github.com/Phi
 
 ### ❓ How to use?
 
-Just visit [this page](https://lanyard.eggsy.app) and use the input to check on whoever you want! _Keep in mind that the user has to be in Lanyard's Discord server so that they could be monitored by the service._
+Just visit [this page](https://visualizer.eggsy.xyz) and use the input to check on whoever you want! _Keep in mind that the user has to be in Lanyard's Discord server so that they could be monitored by the service._
 
 ### 🌟 Host it yourself
 
