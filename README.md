@@ -29,10 +29,10 @@ I don't collect any kind of data, there's no third-party plugins (except the Goo
   - Change directory to the new folder: `cd lanyard-visualizer`
 - Instal dependencies
   - With `npm`: `npm install`
-  - With `yarn`: `yarn`
+  - With `pnpm`: `pnpm`
 - Start in development, or build the app
   - With `npm`: `npm run dev` or `npm run build` (and then `npm run serve`)
-  - With `yarn`: `yarn dev` or `yarn build` (and then `yarn serve`)
+  - With `pnpm`: `pnpm dev` or `pnpm build` (and then `pnpm serve`)
 
 Starting in development mode will provide hot reloading, PRs and issues are always welcome! Feel free to contribute to my project.
 
