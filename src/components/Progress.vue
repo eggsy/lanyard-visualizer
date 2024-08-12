@@ -62,13 +62,10 @@ const getStyles = computed(() => {
 
 <template>
   <div class="rounded-lg bg-gray-200/20 h-2">
-    <div
-      class="rounded-lg bg-white/75 h-2 transition-all"
-      :style="getStyles"
-    ></div>
+    <div class="rounded-lg bg-white/75 h-2 transition-all" :style="getStyles" />
   </div>
 
-  <div class="flex items-center justify-between">
+  <div class="flex mt-2 text-sm opacity-60 items-center justify-between">
     <span>{{ getTimeElapsed }}</span>
     <span>{{ getTimeLeft }}</span>
   </div>

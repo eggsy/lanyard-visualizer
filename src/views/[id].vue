@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useWebSocket, useTitle, useFavicon } from "@vueuse/core"
-import { computed, ref, reactive, watch } from "vue"
+import { computed, ref, reactive, watchEffect } from "vue"
 import { onBeforeRouteLeave, useRoute } from "vue-router"
 
 // Icons
@@ -27,14 +27,14 @@ const user = reactive({ error: false, data: {} }) as {
  * Returns if we still haven't connected to Lanyard API.
  */
 const isConnecting = computed(
-  () => socketLoaded.value === false && Object.keys(user.data)?.length === 0
+  () => socketLoaded.value === false && Object.keys(user.data)?.length === 0,
 )
 
 /**
  * Returns user information including formatted avatar URL.
  */
 const getUser = computed(() => {
-  const { username, id, discriminator, avatar } = user.data?.discord_user || {}
+  const { username, id, avatar } = user.data?.discord_user || {}
   const fallbackImage = "https://i.imgur.com/sn7gwcA.png"
 
   const avatarUri = `https://cdn.discordapp.com/avatars/${id}/${avatar}.${
@@ -44,7 +44,6 @@ const getUser = computed(() => {
   return {
     id,
     username: username || "Loading",
-    discriminator: discriminator || "0000",
     avatar: avatar && imageError.value === false ? avatarUri : fallbackImage,
   }
 })
@@ -101,13 +100,10 @@ const getPlayingStatus = computed(() => {
 })
 
 // Watchers
-watch(
-  () => getUser?.value,
-  (newValue, oldValue) => {
-    if (newValue?.username !== oldValue?.username)
-      useTitle(`${newValue.username}'s Status - Lanyard Visualizer`)
-  }
-)
+watchEffect(() => {
+  useTitle(`${getUser.value.username}'s Status - Lanyard Visualizer`)
+  useFavicon(getUser.value.avatar)
+})
 
 // Connect to Lanyard socket when the app is mounted
 const userId = route.params.id
@@ -142,7 +138,7 @@ else {
           d: {
             subscribe_to_id: userId,
           },
-        })
+        }),
       )
 
       socketLoaded.value = true
@@ -200,7 +196,7 @@ else {
 
     <div
       v-else
-      class="flex flex-col justify-center w-full mx-auto px-8 md:px-0 h-screen space-y-4 md:w-4/12 2xl:w-3/12"
+      class="flex flex-col justify-center w-full mx-auto px-8 md:px-0 h-screen space-y-4 md:w-4/12 2xl:w-4/12"
     >
       <div
         v-motion-fade
@@ -215,7 +211,7 @@ else {
 
       <!-- Title -->
       <div v-motion-fade :delay="300" class="flex items-center justify-between">
-        <div class="flex space-x-2 items-center">
+        <div class="flex space-x-4 items-center">
           <div class="flex-shrink-0">
             <img
               :src="getUser.avatar || ''"
@@ -229,15 +225,9 @@ else {
             />
           </div>
 
-          <div>
-            <h1 class="font-semibold text-xl leading-tight">
-              {{ getUser.username }}
-            </h1>
-
-            <h2 class="text-sm leading-tight opacity-50">
-              #{{ getUser.discriminator }}
-            </h2>
-          </div>
+          <h1 class="font-semibold text-xl leading-tight">
+            {{ getUser.username }}
+          </h1>
         </div>
 
         <a

@@ -1,5 +1,6 @@
 import routes from "./routes"
 import App from "./App.vue"
+import "./tailwind.css"
 
 import { createApp } from "vue"
 import { MotionPlugin } from "@vueuse/motion"
@@ -9,7 +10,5 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 })
-
-import "virtual:windi.css"
 
 createApp(App).use(router).use(MotionPlugin).mount("#app")

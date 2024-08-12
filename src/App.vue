@@ -18,10 +18,6 @@ html {
   scrollbar-width: 6px;
 }
 
-body {
-  @apply bg-dark-900;
-}
-
 html::-webkit-scrollbar {
   width: 6px;
 }

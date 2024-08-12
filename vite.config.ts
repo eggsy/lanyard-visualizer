@@ -3,7 +3,6 @@ import { resolve } from "path"
 
 // Import plugins
 import Vue from "@vitejs/plugin-vue"
-import WindiCSS from "vite-plugin-windicss"
 import Icons from "unplugin-icons/vite"
 
 export default defineConfig({
@@ -15,9 +14,6 @@ export default defineConfig({
     Vue(),
     Icons({
       autoInstall: true,
-    }),
-    WindiCSS({
-      config: resolve("./windi.config.ts"),
     }),
   ],
 })

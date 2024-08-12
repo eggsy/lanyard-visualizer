@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onStartTyping, useTitle } from "@vueuse/core"
+import { onStartTyping, useFavicon, useTitle } from "@vueuse/core"
 import { ref } from "vue"
 import { useRouter } from "vue-router"
 
@@ -20,6 +20,7 @@ const handleSubmit = async () => {
 
 // Hooks
 useTitle("Lanyard Visualizer")
+useFavicon("/logo.png")
 
 onStartTyping(() => {
   inputElement?.value?.focus()

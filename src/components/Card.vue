@@ -70,7 +70,7 @@ watch(
   () => {
     if (imageError.large === true) imageError.large = false
     if (imageError.small === true) imageError.small = false
-  }
+  },
 )
 
 // Computed methods
@@ -157,7 +157,7 @@ const getTime = computed(() => {
         />
       </div>
 
-      <div class="space-y-px">
+      <div class="space-y-1">
         <a
           v-if="isSpotify && trackId"
           :href="`https://open.spotify.com/track/${trackId}`"
@@ -172,11 +172,11 @@ const getTime = computed(() => {
           {{ name }}
         </h1>
 
-        <h2 v-if="details" class="leading-tight opacity-90 line-clamp-2">
+        <h2 v-if="details" class="leading-tight opacity-50 line-clamp-2">
           {{ isSpotify ? "by" : "" }} {{ details }}
         </h2>
 
-        <h2 v-if="state" class="leading-tight opacity-90 line-clamp-2">
+        <h2 v-if="state" class="leading-tight opacity-50 line-clamp-2">
           {{ isSpotify ? "on" : "" }} {{ state }}
         </h2>
 
